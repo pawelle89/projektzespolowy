@@ -1,0 +1,22 @@
+<?php echo $this->render('header.phtml'); ?>
+
+      <h1><?php echo $this->escape($this->title); ?></h1>
+      
+      <?php if ($this->userticket) :?>
+   <form action="<?php echo $this->baseUrl ?>/admin/deleteuser" method="post">
+      <p>Czy na pewno chcesz usunąć
+         <?php echo $this->escape($this->userticket->author); ?>’ by ‘
+         <?php echo $this->escape($this->userticket->cathegory); ?>’? </p>
+      <div>
+         <input type="hidden" name="id" value="<?php
+            echo $this->userticket->id; ?>" />
+         <input type="submit" name="del" value="Tak" />
+         <input type="submit" name="del" value="Nie" />
+      </div>
+   </form>
+
+<?php else: ?>
+   <p>Nie można znaleźć ticketu.</p>
+<?php endif;?> 
+      
+<?php echo $this->render('footer.phtml'); ?>

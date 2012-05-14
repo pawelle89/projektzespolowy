@@ -1,0 +1,76 @@
+<form action="<?php echo $this->baseUrl ?>/admin/<?php
+      echo $this->action; ?>" method="post">
+   <div>
+      <label for="author">Autor</label> 
+      <input type="text" name="author" value="<?php
+         echo $this->escape(trim($this->userticket->author));?>"/>
+   </div><br/>
+    
+   <div>
+      <label for="cathegory">Kategoria</label>
+      <input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy" list="datalist" value="<?php
+         echo $this->escape(trim($this->userticket->cathegory));?>"/>
+      <datalist id="datalist">
+          <option value="problem z komputerem w sali">
+          <option value="awaria komputera pracownika">
+          <option value="inne">
+          <option value="awaria sieci">
+      </datalist>
+   </div><br/>
+   
+   <div>
+      <label for="problem_describe">Opis problemu</label>
+      <input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
+         echo $this->escape($this->userticket->problem_describe);?>"/>
+   </div><br/>
+    
+   <div>
+      <label for="send_data">Data wysłania</label>
+      <input type="text" name="send_data" value="<?php
+         echo $this->escape($this->userticket->send_data);?>"/>
+   </div><br/>
+   
+   <?php /*
+$pozostalo = (strtotime('2012-05-17') - strtotime('2012-05-15')) / (60*60*24);
+echo "Pozostało ".$pozostalo." dni do ";
+
+$data = "2012-05-15";
+$obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+$pozostalo = (strtotime($data) - strtotime($obecna_data)) / (60*60*24);
+echo "Pozostało ".$pozostalo." dni do ".$data; */
+?>
+    
+   <div>
+      <label for="end_data">Data zakończenia</label>
+      <input type="text" name="end_data" value="0"/> 
+   </div><br/>
+    
+   <div>
+      <label for="status">Status</label>
+      <input  placeholder="Naciśnij dwa razy" list="datalist2" type="text" name="status" value="<?php
+         echo $this->escape($this->userticket->status);?>"/> 
+      <datalist id="datalist2">
+          <option value="brak">
+          <option value="przyjęto zgłoszenie">
+          <option value="oczekujący">
+          <option value="w trakcie realizacji">
+          <option value="wysłany do serwisu">
+          <option value="zakończony">
+          <option value="anulowany">
+      </datalist>
+   </div> <br/>
+    
+   <div>
+      <label for="ip_number">Numer IP</label>
+      <input type="text" name="ip_number" value="<?php
+         echo $_SERVER['REMOTE_ADDR'];?>"/> 
+   </div><br/>     
+    
+    
+   <div id="formbutton">
+      <input type="hidden" name="id" value="<?php
+         echo $this->userticket->id; ?>" /> 
+      <input type="submit" name="edit" value="<?php
+         echo $this->escape($this->buttonText); ?>" />
+   </div>
+</form>

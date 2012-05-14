@@ -1,0 +1,53 @@
+<?php echo $this->render('header.phtml'); ?>
+      
+<p><a href="<?php echo $this->baseUrl; ?>/user/add">Dodaj nowy ticket</a></p>
+<table>
+   <tr>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>
+      <th>Czas realizacji</th>
+   </tr>
+
+   <?php foreach($this->usertickets as $userticket) : ?>
+   
+   <?php if($this->escape($userticket->author)== 'Majk') { ?>
+   
+   <tr style="background-color: lightblue;">
+      <td><?php echo $this->escape($userticket->cathegory);?></td>
+      <td><?php echo $this->escape($userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($userticket->send_data);?></td>
+      <td><?php echo $this->escape($userticket->end_data);?></td>
+      <td><?php echo $this->escape($userticket->status);?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($userticket->send_data);
+            $enddata = $this->escape($userticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($userticket->end_data)== 0)
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+   </tr>
+   
+   <?php } ?>
+   
+   <?php endforeach; ?> 
+
+</table>
+
+<?php echo $this->render('footer.phtml'); ?>

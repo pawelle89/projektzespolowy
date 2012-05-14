@@ -1,0 +1,52 @@
+<form action="<?php echo $this->baseUrl ?>/index/<?php
+      echo $this->action; ?>" method="post">
+   <div>
+      <label for="author">Autor</label> 
+      <input type="text" name="author" value="<?php
+         echo $this->escape(trim($this->guestticket->author));?>"/>
+   </div>
+    
+   <div>
+      <label for="cathegory">Kategoria</label>
+      <input type="text" name="cathegory" value="<?php
+         echo $this->escape($this->guestticket->cathegory);?>"/>
+   </div>
+    
+   <div>
+      <label for="problem_describe">Opis problemu</label>
+      <input type="text" name="problem_describe" value="<?php
+         echo $this->escape($this->guestticket->problem_describe);?>"/>
+   </div>
+    
+   <div>
+      <label for="send_data">Data wysłania</label>
+      <input type="text" name="send_data" value="<?php
+         echo $this->escape($this->guestticket->send_data);?>"/>
+   </div>
+    
+   <div>
+      <label for="end_data">Data zakończenia</label>
+      <input type="text" name="end_data" value="<?php
+         echo $this->escape($this->guestticket->end_data);?>"/>
+   </div>
+    
+   <div>
+      <label for="status">Status</label>
+      <input type="text" name="status" value="<?php
+         echo $this->escape($this->guestticket->status);?>"/>
+   </div> 
+    
+   <div>
+      <label for="ip_number">Numer IP</label>
+      <input type="text" name="ip_number" value="<?php
+         echo $this->escape($this->guestticket->ip_number);?>"/>
+   </div>     
+    
+    
+   <div id="formbutton">
+      <input type="hidden" name="id" value="<?php
+         echo $this->guestticket->id; ?>" /> 
+      <input type="submit" name="add" value="<?php
+         echo $this->escape($this->buttonText); ?>" />
+   </div>
+</form>

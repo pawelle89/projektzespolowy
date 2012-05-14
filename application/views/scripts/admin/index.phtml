@@ -1,0 +1,119 @@
+<?php echo $this->render('header.phtml'); ?>
+   
+   <h1>Tickety Użytkowników</h1>
+   
+   <!-- może można jakoś zmienić tytuł tabeli w table -->
+<table>
+   <tr>
+      <th>Autor</th>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Numer IP</th>
+      <th>Czas realizacji</th>
+      <th>&nbsp;</th>
+   </tr>
+
+   <?php foreach($this->usertickets as $userticket) : ?>
+   
+   <tr style="background-color: lightblue;">
+      <td><?php echo $this->escape($userticket->author);?></td>
+      <td><?php echo $this->escape($userticket->cathegory);?></td>
+      <td><?php echo $this->escape($userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($userticket->send_data);?></td>
+      <td><?php echo $this->escape($userticket->end_data);?></td>
+      <td><?php echo $this->escape($userticket->status);?></td>
+      <td><?php echo $this->escape($userticket->ip_number);?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($userticket->send_data);
+            $enddata = $this->escape($userticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($userticket->end_data)== 0)
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+      <td>
+         <a href="<?php echo $this->baseUrl; ?>/admin/edituser/id/<?php
+            echo $userticket->id;?>">Edytuj</a>
+         <a href="<?php echo $this->baseUrl; ?>/admin/deleteuser/id/<?php
+            echo $userticket->id;?>">Usuń</a>
+      </td>
+   </tr>
+   <?php endforeach; ?>
+
+</table>
+   
+   <h1>Tickety Gości</h1>
+   
+   <!-- może można jakoś zmienić tytuł tabeli w table -->
+   
+<table>
+   <tr>
+      <th>Autor</th>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Numer IP</th>
+      <th>Czas realizacji</th>
+      <th>&nbsp;</th>
+   </tr>
+
+   <?php foreach($this->guesttickets as $guestticket) : ?>
+   
+   <tr style="background-color: lightgreen;">
+      <td><?php echo $this->escape($guestticket->author);?></td>
+      <td><?php echo $this->escape($guestticket->cathegory);?></td>
+      <td><?php echo $this->escape($guestticket->problem_describe);?></td>
+      <td><?php echo $this->escape($guestticket->send_data);?></td>
+      <td><?php echo $this->escape($guestticket->end_data);?></td>
+      <td><?php echo $this->escape($guestticket->status);?></td>
+      <td><?php echo $this->escape($guestticket->ip_number);?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($guestticket->send_data);
+            $enddata = $this->escape($guestticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($userticket->end_data)== 0)
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+      <td>
+         <a href="<?php echo $this->baseUrl; ?>/admin/editguest/id/<?php
+            echo $guestticket->id;?>">Edytuj</a>
+         <a href="<?php echo $this->baseUrl; ?>/admin/deleteguest/id/<?php
+            echo $guestticket->id;?>">Usuń</a>
+      </td>
+   </tr>
+   <?php endforeach; ?> 
+
+</table> 
+<?php echo $this->render('footer.phtml'); ?>

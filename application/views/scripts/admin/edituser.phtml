@@ -1,0 +1,13 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<!-- 
+    render jest lepsze, bo bierze wspólny plik header.phtml,
+    który jest w katalogu scripts, a include potrzebuje
+    header.phtml w tym samym katalogu
+    <? //include "header.phtml"; ?>
+-->
+      <h1><?php echo $this->escape($this->title); ?></h1>
+      
+      <?php echo $this->render('admin/_userform.phtml'); ?>
+      
+<?php echo $this->render('footer.phtml'); ?>

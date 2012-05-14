@@ -1,0 +1,92 @@
+<form action="<?php echo $this->baseUrl ?>/index/<?php
+      echo $this->action; ?>" method="post">
+   <div>
+      <label for="author">Autor</label> 
+      <input type="text" name="author" value="<?php
+         echo $this->escape(trim($this->guestticket->author));?>"/>
+   </div>
+    
+    create table 'userticket'
+    ( id int(6) auto_increment;
+    author varchar(50) not null;
+    cathegory enum('problem z komputerem w sali','awaria komputera pracownika','inne','awaria sieci');
+    send_data datetime;
+    end_data datetime;
+    status enum('przyjęto zgłoszenie','oczekujący','w trakcie realizacji','wysłany do serwisu','zakończony','anulowany');
+    ip_number varchar(20);
+    primary key(id));
+    
+    create table userticket
+    (id int(6) auto_increment,
+    author varchar(50) not null,
+    cathegory enum('problem z komputerem w sali','awaria komputera pracownika','inne','awaria sieci'),
+    problem_describe text null,
+    send_data datetime,
+    end_data datetime,
+    status enum('brak','przyjęto zgłoszenie','oczekujący','w trakcie realizacji','wysłany do serwisu','zakończony','anulowany'),
+    ip_number varchar(20),
+    primary key(id));
+    
+create table guestticket
+    (id int(6) auto_increment,
+    author varchar(50) not null default 'guest',
+    cathegory enum('problem z komputerem w sali','awaria komputera pracownika','inne','awaria sieci'),
+    problem_describe text null,
+    send_data datetime,
+    end_data datetime,
+    status enum('brak','przyjęto zgłoszenie','oczekujący','w trakcie realizacji','wysłany do serwisu','zakończony','anulowany'),
+    ip_number varchar(20),
+    primary key(id));
+    
+    
+    INSERT INTO userticket
+    (id, author, cathegory, send_data, end_data, status, ip_number) 
+    VALUES 
+    ('','Majk','problem z komputerem w sali','','','oczekujący',''),
+('','Majk','problem z komputerem w sali','','','oczekujący',''),
+('','Majk2','problem z komputerem w sali','','','oczekujący',''),
+('','Majk3','problem z komputerem w sali','','','oczekujący',''),
+('','Majk4','problem z komputerem w sali','','','oczekujący',''),
+('','Majk5','problem z komputerem w sali','','','oczekujący','')
+    
+    
+    
+    
+   <div>
+      <label for="cathegory">Kategoria</label>
+      <input type="text" name="cathegory" value="<?php
+         echo $this->escape($this->guestticket->cathegory);?>"/>
+   </div>
+    
+   <div>
+      <label for="send_data">Data wysłania</label>
+      <input type="text" name="send_data" value="<?php
+         echo $this->escape($this->guestticket->send_data);?>"/>
+   </div>
+    
+   <div>
+      <label for="end_data">Data zakończenia</label>
+      <input type="text" name="end_data" value="<?php
+         echo $this->escape($this->guestticket->end_data);?>"/>
+   </div>
+    
+   <div>
+      <label for="status">Status</label>
+      <input type="text" name="status" value="<?php
+         echo $this->escape($this->guestticket->status);?>"/>
+   </div> 
+    
+   <div>
+      <label for="ip_number">Numer IP</label>
+      <input type="text" name="ip_number" value="<?php
+         echo $this->escape($this->guestticket->ip_number);?>"/>
+   </div>     
+    
+    
+   <div id="formbutton">
+      <input type="hidden" name="id" value="<?php
+         echo $this->guestticket->id; ?>" /> 
+      <input type="submit" name="add" value="<?php
+         echo $this->escape($this->buttonText); ?>" />
+   </div>
+</form>
