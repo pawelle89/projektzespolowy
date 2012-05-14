@@ -1,0 +1,22 @@
+<?php echo $this->render('header.phtml'); ?>
+
+      <h1><?php echo $this->escape($this->title); ?></h1>
+      
+      <?php if ($this->guestticket) :?>
+   <form action="<?php echo $this->baseUrl ?>/admin/deleteguest" method="post">
+      <p>Czy na pewno chcesz usunąć
+         <?php echo $this->escape($this->guestticket->author); ?>’ by ‘
+         <?php echo $this->escape($this->guestticket->cathegory); ?>’? </p>
+      <div>
+         <input type="hidden" name="id" value="<?php
+            echo $this->guestticket->id; ?>" />
+         <input type="submit" name="del" value="Tak" />
+         <input type="submit" name="del" value="Nie" />
+      </div>
+   </form>
+
+<?php else: ?>
+   <p>Nie można znaleźć ticketu.</p>
+<?php endif;?> 
+      
+<?php echo $this->render('footer.phtml'); ?>

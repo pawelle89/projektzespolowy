@@ -155,7 +155,7 @@ class AdminController extends Zend_Controller_Action
    {
       $this->view->assign('title','Usuń Ticket');
       
-      $album = new Album();
+      $guestticket = new Guestticket();
 
    if ($this->_request->isPost()) {
       Zend_Loader::loadClass('Zend_Filter_Alpha');
@@ -163,22 +163,22 @@ class AdminController extends Zend_Controller_Action
 
       $id = (int)$this->_request->getPost('id');
       $del = $filter->filter($this->_request->getPost('del'));
-      if ($del == 'Yes' && $id > 0) {
+      if ($del == 'Tak' && $id > 0) {
          $where = 'id = ' . $id;
-         $rows_affected = $album->delete($where);
+         $rows_affected = $guestticket->delete($where);
       }
    } else {
       $id = (int)$this->_request->getParam('id');
       if ($id > 0) {
-         // only render if we have an id and can find the album.
-         $this->view->album = $album->fetchRow('id='.$id);
-         if ($this->view->album->id > 0) {
+         // only render if we have an id and can find the guestticket.
+         $this->view->guestticket = $guestticket->fetchRow('id='.$id);
+         if ($this->view->guestticket->id > 0) {
             // render template automatically
             return;
          }
       }
    }
-   // redirect back to the album list unless we have rendered the view
+   // redirect back to the guestticket list unless we have rendered the view
    $this->_redirect('/admin'); 
    }
     
