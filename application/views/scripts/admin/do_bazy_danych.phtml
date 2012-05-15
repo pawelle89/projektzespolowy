@@ -49,6 +49,20 @@ create table guestticket
 ('','Majk4','problem z komputerem w sali','','','oczekujący',''),
 ('','Majk5','problem z komputerem w sali','','','oczekujący','')
         
+
+CREATE TABLE users (
+  id int(11) NOT NULL auto_increment,
+  username varchar(50) NOT NULL,
+  password varchar(255) NOT NULL,
+  e_mail varchar(50) NOT NULL,
+  role enum('user','admin') NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY username (username)
+);
+
+INSERT INTO zend.users (id ,username ,password ,e_mail ,role)
+VALUES ('','Seik',MD5('admin'),'seikishin@gmail.com','admin'),
+('','Majk',MD5('majk'),'majkmajk22@gmail.com','user');
    
     
    <div>

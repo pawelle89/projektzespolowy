@@ -15,11 +15,23 @@ require_once 'Zend/Config/Ini.php';
 require_once 'Zend/Registry.php'; 
 require_once 'Zend/Db.php';
 require_once 'Zend/Db/Table.php'; 
+require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
 
 // load configuration
 $config = new Zend_Config_Ini('../application/configs/config.ini','general');
 $registry = Zend_Registry::getInstance();
 $registry->set('config', $config); 
+
+///////////////////////////////////////////////////////////////////////////////
+// połączenie z bazą danych dla logowania użytkowników
+$params = $config->db->config->toArray();
+
+$DB = new Zend_Db_Adapter_Pdo_Mysql($params);
+    
+$DB->setFetchMode(Zend_Db::FETCH_OBJ);
+Zend_Registry::set('DB',$DB);
+///////////////////////////////////////////////////////////////////////////////
+
 
 // setup database 
 $db = Zend_Db::factory(	$config->db->adapter,$config->db->config->toArray() );

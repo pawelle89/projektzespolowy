@@ -1,12 +1,60 @@
 <?php echo $this->render('header.phtml'); ?>
 
-      <h1><?php echo $this->escape($this->title); ?></h1>
+      <h1>Czy na pewno chcesz usunąć:</h1>
+      <br/>
+      
+      
       
       <?php if ($this->guestticket) :?>
-   <form action="<?php echo $this->baseUrl ?>/admin/deleteguest" method="post">
-      <p>Czy na pewno chcesz usunąć
-         <?php echo $this->escape($this->guestticket->author); ?>’ by ‘
-         <?php echo $this->escape($this->guestticket->cathegory); ?>’? </p>
+      
+      
+            <table>
+   <tr>
+      <th>Autor</th>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Numer IP</th>
+      <th>Czas realizacji</th>
+   </tr>
+
+   <tr style="background-color: lightblue;">
+      <td><?php echo $this->escape($this->guestticket->author);?></td>
+      <td><?php echo $this->escape($this->guestticket->cathegory);?></td>
+      <td><?php echo $this->escape($this->guestticket->problem_describe);?></td>
+      <td><?php echo $this->escape($this->guestticket->send_data);?></td>
+      <td><?php echo $this->escape($this->guestticket->end_data);?></td>
+      <td><?php echo $this->escape($this->guestticket->status);?></td>
+      <td><?php echo $this->escape($this->guestticket->ip_number);?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($this->guestticket->send_data);
+            $enddata = $this->escape($this->guestticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($this->guestticket->end_data)== 0)
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+   </tr>
+
+</table>
+      <br/>
+   <form action="<?php echo $this->baseUrl ?>/admin/deleteguest" method="post">   
+      
       <div>
          <input type="hidden" name="id" value="<?php
             echo $this->guestticket->id; ?>" />

@@ -76,6 +76,16 @@ class UserController extends Zend_Controller_Action
     
   }
   
+   public function loginformAction()
+ {
+   $request = $this->getRequest();  
+$this->view->assign('action', $request->getBaseURL()."/user/auth");  
+   $this->view->assign('title', 'Logowanie');
+   $this->view->assign('username', 'Nazwa użytkownika');	
+   $this->view->assign('password', 'Hasło');	
+    
+ }
+  
   public function nameAction()
   {
   

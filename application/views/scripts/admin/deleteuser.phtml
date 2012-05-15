@@ -1,7 +1,7 @@
 <?php echo $this->render('header.phtml'); ?>
 
-      <h1><?php echo $this->escape($this->title); ?></h1>
-      
+      <h1>Czy na pewno chcesz usunąć:</h1>
+      <br/>
       
       
       
@@ -21,25 +21,25 @@
    </tr>
 
    <tr style="background-color: lightblue;">
-      <td><?php echo $this->escape($this->$userticket->author);?></td>
-      <td><?php echo $this->escape($this->$userticket->cathegory);?></td>
-      <td><?php echo $this->escape($userticket->problem_describe);?></td>
-      <td><?php echo $this->escape($userticket->send_data);?></td>
-      <td><?php echo $this->escape($userticket->end_data);?></td>
-      <td><?php echo $this->escape($userticket->status);?></td>
-      <td><?php echo $this->escape($userticket->ip_number);?></td>
+      <td><?php echo $this->escape($this->userticket->author);?></td>
+      <td><?php echo $this->escape($this->userticket->cathegory);?></td>
+      <td><?php echo $this->escape($this->userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($this->userticket->send_data);?></td>
+      <td><?php echo $this->escape($this->userticket->end_data);?></td>
+      <td><?php echo $this->escape($this->userticket->status);?></td>
+      <td><?php echo $this->escape($this->userticket->ip_number);?></td>
       <td>
           <?php
             
-            $senddata = $this->escape($userticket->send_data);
-            $enddata = $this->escape($userticket->end_data);
+            $senddata = $this->escape($this->userticket->send_data);
+            $enddata = $this->escape($this->userticket->end_data);
             $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
             
             $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
             
             $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
           
-            if($this->escape($userticket->end_data)== 0)
+            if($this->escape($this->userticket->end_data)== 0)
             {
                 echo $pozostalo1." dni";
             }
@@ -52,16 +52,8 @@
    </tr>
 
 </table>
-      
-   <form action="<?php echo $this->baseUrl ?>/admin/deleteuser" method="post">
-      <p>Czy na pewno chcesz usunąć
-         <?php echo $this->escape($this->userticket->author); ?>’ by ‘
-         <?php echo $this->escape($this->userticket->cathegory); ?>’? </p>
-      
-     
-   
-      
-      
+      <br/>
+   <form action="<?php echo $this->baseUrl ?>/admin/deleteuser" method="post">   
       
       <div>
          <input type="hidden" name="id" value="<?php
