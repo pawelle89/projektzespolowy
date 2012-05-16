@@ -1,4 +1,10 @@
 <?php echo $this->render('header.phtml'); ?>
+
+
+
+<h1>Hello, <?=$this->escape($this->username);?></h1>
+
+<a href='<?=$this->escape($this->urllogout);?>'>Logout</a>
       
 <p><a href="<?php echo $this->baseUrl; ?>/user/add">Dodaj nowy ticket</a></p>
 <table>
@@ -13,7 +19,7 @@
 
    <?php foreach($this->usertickets as $userticket) : ?>
    
-   <?php if($this->escape($userticket->author)== 'Majk') { ?>
+   <?php if($this->escape($userticket->author)== $this->escape($this->username)) { ?>
    
    <tr style="background-color: lightblue;">
       <td><?php echo $this->escape($userticket->cathegory);?></td>

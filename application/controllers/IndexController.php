@@ -1,5 +1,8 @@
 <?php
 require_once 'Zend/Controller/Action.php';
+require_once 'Zend/Auth.php';
+require_once 'Zend/Auth/Adapter/DbTable.php';
+
 
 class IndexController extends Zend_Controller_Action
 {
@@ -13,6 +16,8 @@ class IndexController extends Zend_Controller_Action
     
   public function indexAction()
   {
+      
+      
     $this->view->assign('title', 'Home');
 	$this->view->assign('wellcome','Witaj na naszej stronie! Użytkownik niezalogowany może TUTAJ wysłać ticket. Aby wysłać ticket ze swojego konta musisz się zalogować.');
 	$this->view->assign('webmaster','Seik');

@@ -1,5 +1,7 @@
 <?php
 require_once 'Zend/Controller/Action.php';
+require_once 'Zend/Auth.php';
+require_once 'Zend/Auth/Adapter/DbTable.php';
 
 class UserController extends Zend_Controller_Action
 {
@@ -13,8 +15,87 @@ class UserController extends Zend_Controller_Action
         // DLA DANEGO UŻYTKOWNIKA TRZEBA BĘDZIE WYŚWIETLIĆ JEGO TICKETY
     }
     
+    public function logoutAction()
+ {
+   $auth = Zend_Auth::getInstance();
+$auth->clearIdentity();
+$this->_redirect('/index/index');
+ }
+    
+    public function userpageAction(){
+    $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/user/loginform');
+	}
+  
+    $request = $this->getRequest(); 
+	$user		= $auth->getIdentity();
+	//$real_name	= $user->real_name;
+	$username	= $user->username;
+	$logoutUrl  = $request->getBaseURL().'/user/logout';
+
+	$this->view->assign('username', $username);
+	$this->view->assign('urllogout',$logoutUrl);
+}
+
+
+    
+    
+    public function authAction(){
+   $request 	= $this->getRequest();
+   $registry 	= Zend_Registry::getInstance();
+$auth		= Zend_Auth::getInstance(); 
+
+$DB = $registry['DB'];
+	
+   $authAdapter = new Zend_Auth_Adapter_DbTable($DB);
+   $authAdapter->setTableName('users')
+               ->setIdentityColumn('username')
+               ->setCredentialColumn('password');    
+
+// Set the input credential values
+$uname = $request->getParam('username');
+$paswd = $request->getParam('password');
+   $authAdapter->setIdentity($uname);
+   $authAdapter->setCredential(md5($paswd));
+
+   // Perform the authentication query, saving the result
+   $result = $auth->authenticate($authAdapter);
+
+   if($result->isValid()){
+  $data = $authAdapter->getResultRowObject(null,'password');
+  $auth->getStorage()->write($data);
+  $this->_redirect('/user/index');
+}else{
+  $this->_redirect('/user/loginform');
+}
+}
+    
    public function addAction() 
    {
+       
+       //////////////////////////////////////////////////////////////////////////////////
+       //       TO TRZEBA BĘDZIE DODAĆ WSZĘDZIE ŻEBY SOBIE KTOŚ NIE WLAZŁ
+       //////////////////////////////////////////////////////////////////////////////////
+       //
+       //       TUTAJ TRZEBA DODAĆ ROLE ADMINA I USERA
+       //
+	$auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/user/loginform');
+	}
+        //////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////
+  
+    $request = $this->getRequest(); 
+	$user		= $auth->getIdentity();
+	//$real_name	= $user->real_name;
+	$username	= $user->username;
+       
+        $this->view->assign('username', $username);
+       
       $this->view->assign('title','Dodaj Ticket');
       
 
@@ -66,6 +147,23 @@ class UserController extends Zend_Controller_Action
     
   public function indexAction()
   {
+      
+          $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/user/loginform');
+	}
+  
+    $request = $this->getRequest(); 
+	$user		= $auth->getIdentity();
+	//$real_name	= $user->real_name;
+	$username	= $user->username;
+	$logoutUrl  = $request->getBaseURL().'/user/logout';
+
+	$this->view->assign('username', $username);
+	$this->view->assign('urllogout',$logoutUrl);
+      
+      
     $this->view->assign('name', 'Wiwit');
     $this->view->assign('title', 'Moje Tickety');
     
