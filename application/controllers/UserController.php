@@ -13,6 +13,7 @@ class UserController extends Zend_Controller_Action
         Zend_Loader::loadClass('Userticket');
         
         // DLA DANEGO UŻYTKOWNIKA TRZEBA BĘDZIE WYŚWIETLIĆ JEGO TICKETY
+        
     }
     
     public function logoutAction()

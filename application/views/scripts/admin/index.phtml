@@ -1,5 +1,10 @@
 <?php echo $this->render('header.phtml'); ?>
    
+
+<h1>Hello, <?=$this->escape($this->username);?></h1>
+
+<a href='<?=$this->escape($this->urllogout);?>'>Logout</a>
+
    <h1>Tickety Użytkowników</h1>
    
    <!-- może można jakoś zmienić tytuł tabeli w table -->

@@ -1,9 +1,9 @@
 <form action="<?php echo $this->baseUrl ?>/user/<?php
       echo $this->action; ?>" method="post">
    <div>
-      <label for="author">Autor</label> 
-      <input type="text" name="author" value="<?php
-         echo $this->escape(trim($this->username));?>"/> to będzie ukryte
+      <label hidden for="author">Autor</label> 
+      <input type="hidden" name="author" value="<?php
+         echo $this->escape(trim($this->username));?>"/> 
    </div><br/>
     
    <div>
@@ -24,9 +24,9 @@
    </div><br/>
     
    <div>
-      <label for="send_data">Data wysłania</label>
-      <input type="text" name="send_data" value="<?php
-         echo date("Y-m-d");?>"/> to będzie ukryte
+      <label hidden for="send_data">Data wysłania</label>
+      <input type="hidden" name="send_data" value="<?php
+         echo date("Y-m-d");?>"/> 
    </div><br/>
    
    <?php /*
@@ -40,19 +40,19 @@ echo "Pozostało ".$pozostalo." dni do ".$data; */
 ?>
     
    <div>
-      <label for="end_data">Data zakończenia</label>
-      <input type="text" name="end_data" value="0"/> to będzie ukryte
+      <label hidden for="end_data">Data zakończenia</label>
+      <input type="hidden" name="end_data" value="0"/> 
    </div><br/>
     
    <div>
-      <label for="status">Status</label>
-      <input type="text" name="status" value="oczekujący"/> to będzie ukryte
+      <label hidden for="status">Status</label>
+      <input type="hidden" name="status" value="oczekujący"/> 
    </div> <br/>
     
    <div>
-      <label for="ip_number">Numer IP</label>
-      <input type="text" name="ip_number" value="<?php
-         echo $_SERVER['REMOTE_ADDR'];?>"/> to będzie ukryte
+       <label hidden for="ip_number">Numer IP</label>
+      <input type="hidden" name="ip_number" value="<?php
+         echo $_SERVER['REMOTE_ADDR'];?>"/> 
    </div><br/>     
     
     

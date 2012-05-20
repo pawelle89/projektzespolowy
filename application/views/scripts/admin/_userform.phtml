@@ -47,7 +47,7 @@ echo "Pozostało ".$pozostalo." dni do ".$data; */
     
    <div>
       <label for="status">Status</label>
-      <input  placeholder="Naciśnij dwa razy" list="datalist2" type="text" name="status" value="<?php
+      <input  placeholder="Naciśnij dwa razy" list="datalist2" type="hidden" name="status" value="<?php
          echo $this->escape($this->userticket->status);?>"/> 
       <datalist id="datalist2">
           <option value="brak">

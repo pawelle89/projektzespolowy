@@ -2,6 +2,8 @@
 require_once 'Zend/Controller/Action.php';
 require_once 'Userticket.php';
 require_once 'Guestticket.php';
+require_once 'Zend/Auth.php';
+require_once 'Zend/Auth/Adapter/DbTable.php';
 
 class AdminController extends Zend_Controller_Action
 {
@@ -12,10 +14,74 @@ class AdminController extends Zend_Controller_Action
         
         Zend_Loader::loadClass('Userticket');
         Zend_Loader::loadClass('Guestticket');
+        
+        
+  
+    
     }
+    
+    public function logoutAction()
+ {
+   $auth = Zend_Auth::getInstance();
+$auth->clearIdentity();
+$this->_redirect('/index/index');
+ }
+ 
+ public function authAction(){
+   $request 	= $this->getRequest();
+   $registry 	= Zend_Registry::getInstance();
+$auth		= Zend_Auth::getInstance(); 
+
+$DB = $registry['DB'];
+	
+   $authAdapter = new Zend_Auth_Adapter_DbTable($DB);
+   $authAdapter->setTableName('users')
+               ->setIdentityColumn('username')
+               ->setCredentialColumn('password');    
+
+// Set the input credential values
+$uname = $request->getParam('username');
+$paswd = $request->getParam('password');
+   $authAdapter->setIdentity($uname);
+   $authAdapter->setCredential(md5($paswd));
+
+   // Perform the authentication query, saving the result
+   $result = $auth->authenticate($authAdapter);
+
+   if($result->isValid()){
+  $data = $authAdapter->getResultRowObject(null,'password');
+  $auth->getStorage()->write($data);
+  $this->_redirect('/admin/index');
+}else{
+  $this->_redirect('/admin/loginform');
+}
+}
+
+public function loginformAction()
+ {
+   $request = $this->getRequest();  
+$this->view->assign('action', $request->getBaseURL()."/admin/auth");  
+   $this->view->assign('title', 'Logowanie');
+   $this->view->assign('username', 'Nazwa użytkownika');	
+   $this->view->assign('password', 'Hasło');	
+    
+ }
     
    public function edituserAction() 
    {
+       $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/admin/loginform');
+	}
+        else {
+            $request = $this->getRequest(); 
+	$role		= $auth->getIdentity();
+        if(!($role->role == "admin")){
+            $this->_redirect('/admin/loginform');
+        }
+        }
+       
       $this->view->assign('title','Edytuj Ticket');
       
       $userticket = new Userticket(); 
@@ -69,6 +135,19 @@ class AdminController extends Zend_Controller_Action
    
    public function editguestAction() 
    {
+       $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/admin/loginform');
+	}
+        else {
+            $request = $this->getRequest(); 
+	$role		= $auth->getIdentity();
+        if(!($role->role == "admin")){
+            $this->_redirect('/admin/loginform');
+        }
+        }
+       
       $this->view->assign('title','Edytuj Ticket');
       
       $guestticket = new Guestticket(); 
@@ -122,6 +201,19 @@ class AdminController extends Zend_Controller_Action
 
    public function deleteuserAction() 
    {
+       $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/admin/loginform');
+	}
+        else {
+            $request = $this->getRequest(); 
+	$role		= $auth->getIdentity();
+        if(!($role->role == "admin")){
+            $this->_redirect('/admin/loginform');
+        }
+        }
+       
       $this->view->assign('title','Usuń Ticket');
       
       $userticket = new Userticket();
@@ -153,6 +245,19 @@ class AdminController extends Zend_Controller_Action
    
       public function deleteguestAction() 
    {
+          $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/admin/loginform');
+	}
+        else {
+            $request = $this->getRequest(); 
+	$role		= $auth->getIdentity();
+        if(!($role->role == "admin")){
+            $this->_redirect('/admin/loginform');
+        }
+        }
+          
       $this->view->assign('title','Usuń Ticket');
       
       $guestticket = new Guestticket();
@@ -184,7 +289,28 @@ class AdminController extends Zend_Controller_Action
     
   public function indexAction()
   {
-    $this->view->assign('name', 'Seik');
+      $auth		= Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/admin/loginform');
+	}
+        else {
+            $request = $this->getRequest(); 
+	$role		= $auth->getIdentity();
+        if(!($role->role == "admin")){
+            $this->_redirect('/admin/loginform');
+        }
+        }
+        
+        $request = $this->getRequest(); 
+	$user		= $auth->getIdentity();
+	$username	= $user->username;
+	$logoutUrl  = $request->getBaseURL().'/admin/logout';
+
+	$this->view->assign('username', $username);
+	$this->view->assign('urllogout',$logoutUrl);
+      
+   // $this->view->assign('name', 'Seik');
     $this->view->assign('title', 'Lista tiketów');
     
     $userticket = new Userticket();
