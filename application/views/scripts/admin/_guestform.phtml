@@ -2,7 +2,7 @@
       echo $this->action; ?>" method="post">
    <div>
       <label for="author">Autor</label>
-      <input type="text" name="author" value="<?php
+      <input required="required" type="text" name="author" value="<?php
          echo $this->escape(trim($this->guestticket->author));?>"/>
    </div><br/>
     
@@ -21,12 +21,12 @@
    <div>
       <label for="problem_describe">Opis problemu</label>
       <input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
-         echo $this->escape($this->problem_describe);?>"/>
+         echo $this->escape(trim($this->guestticket->problem_describe));?>"/>
    </div><br/>
     
    <div>
       <label for="send_data">Data wysłania</label>
-      <input type="text" name="send_data" value="<?php
+      <input required="required" type="text" name="send_data" value="<?php
          echo $this->escape(trim($this->guestticket->send_data));?>"/>
    </div><br/>
    
@@ -42,13 +42,13 @@ echo "Pozostało ".$pozostalo." dni do ".$data; */
     
    <div>
       <label for="end_data">Data zakończenia</label>
-      <input type="text" name="end_data" value="<?php
+      <input required="required" type="text" name="end_data" value="<?php
          echo $this->escape(trim($this->guestticket->end_data));?>"/>
    </div><br/>
     
    <div>
       <label for="status">Status</label>
-      <input  placeholder="Naciśnij dwa razy" list="datalist2" type="text" name="status" value="<?php
+      <input required="required"  placeholder="Naciśnij dwa razy" list="datalist2" type="text" name="status" value="<?php
          echo $this->escape($this->guestticket->status);?>"/>
       <datalist id="datalist2">
           <option value="brak">
@@ -63,7 +63,7 @@ echo "Pozostało ".$pozostalo." dni do ".$data; */
     
    <div>
       <label for="ip_number">Numer IP</label>
-      <input type="text" name="ip_number" value="<?php
+      <input required="required" type="text" name="ip_number" value="<?php
          echo $this->escape($this->guestticket->ip_number);?>"/>
    </div><br/>     
     

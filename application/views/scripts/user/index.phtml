@@ -2,11 +2,14 @@
 
 
 
-<h1>Hello, <?=$this->escape($this->username);?></h1>
+<h1>Witaj, <?=$this->escape($this->username);?></h1>
 
-<a href='<?=$this->escape($this->urllogout);?>'>Logout</a>
+<a href='<?=$this->escape($this->urllogout);?>'>Wyloguj się</a>
       
 <p><a href="<?php echo $this->baseUrl; ?>/user/add">Dodaj nowy ticket</a></p>
+
+<h1 class="nagl">Aktualne Tickety</h1>
+
 <table>
    <tr>
       <th>Kategoria</th>
@@ -19,7 +22,8 @@
 
    <?php foreach($this->usertickets as $userticket) : ?>
    
-   <?php if($this->escape($userticket->author)== $this->escape($this->username)) { ?>
+   <?php if($this->escape($userticket->author)== $this->escape($this->username)) { 
+       if($this->escape($userticket->status)!= 'zakończony') { ?>
    
    <tr style="background-color: lightblue;">
       <td><?php echo $this->escape($userticket->cathegory);?></td>
@@ -50,7 +54,59 @@
       </td>
    </tr>
    
-   <?php } ?>
+   <?php }} ?>
+   
+   <?php endforeach; ?> 
+
+</table>
+
+<h1 class="nagl">Zakończone Tickety</h1>
+
+<table>
+   <tr>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>
+      <th>Czas realizacji</th>
+   </tr>
+
+   <?php foreach($this->usertickets as $userticket) : ?>
+   
+   <?php if($this->escape($userticket->author)== $this->escape($this->username)) {
+       if($this->escape($userticket->status)== 'zakończony') { ?>
+   
+   <tr style="background-color: lightblue;">
+      <td><?php echo $this->escape($userticket->cathegory);?></td>
+      <td><?php echo $this->escape($userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($userticket->send_data);?></td>
+      <td><?php echo $this->escape($userticket->end_data);?></td>
+      <td><?php echo $this->escape($userticket->status);?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($userticket->send_data);
+            $enddata = $this->escape($userticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($userticket->end_data)== 0)
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+   </tr>
+   
+   <?php }} ?>
    
    <?php endforeach; ?> 
 

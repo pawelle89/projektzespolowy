@@ -100,6 +100,23 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $status = trim($filter->filter($this->_request->getPost('status'))); 
       $ip_number = trim($filter->filter($this->_request->getPost('ip_number'))); 
 
+      // jeżeli admin wybierze status zakończony to data musi się uzupełnić
+      // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
+      // zmienić się na zakończony
+      
+      // aktualna data
+      $obecna_data = date("Y-m-d");
+      
+      if($end_data == $obecna_data)
+      {
+          $status = 'zakończony';
+      }
+      else if($status == 'zakończony')
+      {
+          $end_data = $obecna_data;
+      }
+      
+      
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '') {
@@ -122,7 +139,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
          }
       }
    } else {
-      // userticket id should be $params[’id’]
+      // userticket id should be $params['id']
       $id = (int)$this->_request->getParam('id', 0);
       if ($id > 0) {
          $this->view->userticket = $userticket->fetchRow('id='.$id);
@@ -166,6 +183,25 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $status = trim($filter->filter($this->_request->getPost('status'))); 
       $ip_number = trim($filter->filter($this->_request->getPost('ip_number'))); 
 
+      
+       // jeżeli admin wybierze status zakończony to data musi się uzupełnić
+      // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
+      // zmienić się na zakończony
+      
+      // aktualna data
+      $obecna_data = date("Y-m-d");
+      
+      if($end_data == $obecna_data)
+      {
+          $status = 'zakończony';
+      }
+      else if($status == 'zakończony')
+      {
+          $end_data = $obecna_data;
+      }
+      
+      
+      
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '') {
