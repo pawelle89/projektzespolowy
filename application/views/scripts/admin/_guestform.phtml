@@ -65,7 +65,25 @@ echo "Pozostało ".$pozostalo." dni do ".$data; */
       <label for="ip_number">Numer IP</label>
       <input required="required" type="text" name="ip_number" value="<?php
          echo $this->escape($this->guestticket->ip_number);?>"/>
-   </div><br/>     
+   </div><br/>    
+   
+   <div>
+      <label for="admin1">Admin 1</label>
+      <input type="text" name="admin1" value="<?php
+         echo $this->escape($this->guestticket->admin1);?>"/>
+   </div><br/>  
+   
+   <div>
+      <label for="admin2">Admin 2</label>
+      <input type="text" name="admin2" value="<?php
+         echo $this->escape($this->guestticket->admin2);?>"/>
+   </div><br/>  
+   
+   <div>
+      <label for="admin3">Admin 3</label>
+      <input type="text" name="admin3" value="<?php
+         echo $this->escape($this->guestticket->admin3);?>"/>
+   </div><br/>  
     
     
    <div id="formbutton">

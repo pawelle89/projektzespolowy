@@ -150,6 +150,7 @@
       <th>Data zamknięcia</th>
       <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
       <th>Numer IP</th>
+      <th>Admini</th>
       <th>Czas realizacji</th>
       <th>&nbsp;</th>
    </tr>
@@ -166,6 +167,16 @@
       <td><?php echo $this->escape($guestticket->end_data);?></td>
       <td><?php echo $this->escape($guestticket->status);?></td>
       <td><?php echo $this->escape($guestticket->ip_number);?></td>
+      <td><?php echo $this->escape($guestticket->admin1);
+                    if(!(is_null($this->escape($guestticket->admin2))))
+                        {   ?> <br/><?php
+                            echo $this->escape($guestticket->admin2);
+                        }
+                    if(!(is_null($this->escape($guestticket->admin3))))
+                        {   ?> <br/><?php
+                            echo $this->escape($guestticket->admin3);
+                        }
+      ?></td>
       <td>
           <?php
             
@@ -215,6 +226,7 @@
       <th>Data zamknięcia</th>
       <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
       <th>Numer IP</th>
+      <th>Admini</th>
       <th>Czas realizacji</th>
       <th>&nbsp;</th>
    </tr>
@@ -231,6 +243,16 @@
       <td><?php echo $this->escape($guestticket->end_data);?></td>
       <td><?php echo $this->escape($guestticket->status);?></td>
       <td><?php echo $this->escape($guestticket->ip_number);?></td>
+      <td><?php echo $this->escape($guestticket->admin1);
+                    if(!(is_null($this->escape($guestticket->admin2))))
+                        {   ?> <br/><?php
+                            echo $this->escape($guestticket->admin2);
+                        }
+                    if(!(is_null($this->escape($guestticket->admin3))))
+                        {   ?> <br/><?php
+                            echo $this->escape($guestticket->admin3);
+                        }
+      ?></td>
       <td>
           <?php
             

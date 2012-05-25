@@ -18,9 +18,8 @@ class IndexController extends Zend_Controller_Action
   {
       
       
-    $this->view->assign('title', 'Home');
-	$this->view->assign('wellcome','Witaj na naszej stronie! Użytkownik niezalogowany może TUTAJ wysłać ticket. Aby wysłać ticket ze swojego konta musisz się zalogować.');
-	$this->view->assign('webmaster','Seik');
+    $this->view->assign('title', 'Strona Główna');
+	$this->view->assign('wellcome','Witaj na naszej stronie!');
   }
   
   public function addAction() 
@@ -39,9 +38,13 @@ class IndexController extends Zend_Controller_Action
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
       $ip_number = trim($filter->filter($this->_request->getPost('ip_number'))); 
+      $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
+      $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
+      $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
 
       if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '') {
+              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
+                 && $admin2 != '' && $admin3 != '') {
          $data = array(
            'author' => $author,
            'cathegory' => $cathegory,
@@ -50,6 +53,9 @@ class IndexController extends Zend_Controller_Action
            'end_data' => $end_data,
            'status' => $status,
            'ip_number' => $ip_number,
+           'admin1' => $admin1,
+           'admin2' => $admin2,
+           'admin3' => $admin3,
          );
          $guestticket = new Guestticket();
          $guestticket->insert($data);
@@ -67,6 +73,9 @@ class IndexController extends Zend_Controller_Action
    $this->view->guestticket->end_data = ''; 
    $this->view->guestticket->status = ''; 
    $this->view->guestticket->ip_number = ''; 
+   $this->view->guestticket->admin1 = ''; 
+   $this->view->guestticket->admin2 = ''; 
+   $this->view->guestticket->admin3 = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';

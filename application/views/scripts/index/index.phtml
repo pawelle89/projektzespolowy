@@ -1,12 +1,11 @@
 <?php echo $this->render('header.phtml'); ?>
 
-  <h1><?php echo $this->escape($this->title); ?></h1>
-
-  <?=$this->escape($this->wellcome);?>
-  <p>&nbsp;</p>
-  <?=$this->escape($this->webmaster);?>
+  <h1><?=$this->escape($this->wellcome);?></h1>
   
-  Jako niezalogowany użytkownik możesz dodać ticket
+  <h3>Użytkownik niezalogowany może TUTAJ wysłać ticket.</h3>
+  
+  <h3> Aby wysłać ticket ze swojego konta musisz się zalogować.</h3>
+  
   <p><a href="<?php echo $this->baseUrl; ?>/index/add">Dodaj Ticket</a></p>
 
 <?php echo $this->render('footer.phtml'); ?>

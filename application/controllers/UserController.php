@@ -58,12 +58,24 @@ $DB = $registry['DB'];
 // Set the input credential values
 $uname = $request->getParam('username');
 $paswd = $request->getParam('password');
+
+   if($uname == ''){
+      // $this->view->assign('nouser','Brak nazwy użytkownika.');
+  $this->_redirect('/user/loginform');
+  }
+  else if($paswd == ''){
+      // $this->view->assign('nopaswd','Brak hasła.');
+  $this->_redirect('/user/loginform');
+  }
+  
    $authAdapter->setIdentity($uname);
    $authAdapter->setCredential(md5($paswd));
 
    // Perform the authentication query, saving the result
    $result = $auth->authenticate($authAdapter);
 
+
+   
    if($result->isValid()){
   $data = $authAdapter->getResultRowObject(null,'password');
   $auth->getStorage()->write($data);

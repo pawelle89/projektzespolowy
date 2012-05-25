@@ -42,6 +42,16 @@ $DB = $registry['DB'];
 // Set the input credential values
 $uname = $request->getParam('username');
 $paswd = $request->getParam('password');
+
+   if($uname == ''){
+      // $this->view->assign('nouser','Brak nazwy użytkownika.');
+  $this->_redirect('/admin/loginform');
+  }
+  else if($paswd == ''){
+     //  $this->view->assign('nopaswd','Brak hasła.');
+  $this->_redirect('/admin/loginform');
+  }
+
    $authAdapter->setIdentity($uname);
    $authAdapter->setCredential(md5($paswd));
 
@@ -182,6 +192,9 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
       $ip_number = trim($filter->filter($this->_request->getPost('ip_number'))); 
+      $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
+      $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
+      $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
 
       
        // jeżeli admin wybierze status zakończony to data musi się uzupełnić
@@ -204,7 +217,8 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '') {
+              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
+                 && $admin2 != '' && $admin3 != '') {
             $data = array(
                'author' => $author,
                'cathegory' => $cathegory,
@@ -213,6 +227,9 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'end_data' => $end_data,
                'status' => $status,
                'ip_number' => $ip_number,
+               'admin1' => $admin1,
+               'admin2' => $admin2,
+               'admin3' => $admin3,
             );
             $where = 'id = ' . $id;
             $guestticket->update($data, $where); 
