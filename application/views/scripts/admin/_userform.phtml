@@ -29,16 +29,6 @@
       <input required="required" type="text" name="send_data" value="<?php
          echo $this->escape($this->userticket->send_data);?>"/>
    </div><br/>
-   
-   <?php /*
-$pozostalo = (strtotime('2012-05-17') - strtotime('2012-05-15')) / (60*60*24);
-echo "Pozostało ".$pozostalo." dni do ";
-
-$data = "2012-05-15";
-$obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
-$pozostalo = (strtotime($data) - strtotime($obecna_data)) / (60*60*24);
-echo "Pozostało ".$pozostalo." dni do ".$data; */
-?>
     
    <div>
       <label for="end_data">Data zakończenia</label>
@@ -66,6 +56,24 @@ echo "Pozostało ".$pozostalo." dni do ".$data; */
       <input required="required" type="text" name="ip_number" value="<?php
          echo $_SERVER['REMOTE_ADDR'];?>"/> 
    </div><br/>     
+   
+   <div>
+      <label for="admin1">Admin 1</label>
+      <input type="text" name="admin1" value="<?php
+         echo $this->escape($this->userticket->admin1);?>"/>
+   </div><br/>  
+   
+   <div>
+      <label for="admin2">Admin 2</label>
+      <input type="text" name="admin2" value="<?php
+         echo $this->escape($this->userticket->admin2);?>"/>
+   </div><br/>  
+   
+   <div>
+      <label for="admin3">Admin 3</label>
+      <input type="text" name="admin3" value="<?php
+         echo $this->escape($this->userticket->admin3);?>"/>
+   </div><br/> 
     
     
    <div id="formbutton">

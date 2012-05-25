@@ -5,11 +5,10 @@
 
 <a href='<?=$this->escape($this->urllogout);?>'>Wyloguj się</a>
 
-   <h1 class="nagl">Tickety Użytkowników</h1>
+<h1 class="nagl">Twoje Tickety Do Zrealizowania</h1>
    
-   <h2>Aktualne</h2>
+   <h2>Tickety Użytkowników</h2>
    
-   <!-- może można jakoś zmienić tytuł tabeli w table -->
 <table>
    <tr>
       <th>Autor</th>
@@ -17,8 +16,163 @@
       <th>Opis problemu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
-      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Status</th>
       <th>Numer IP</th>
+      <th>Admini</th>
+      <th>Czas realizacji</th>
+      <th>&nbsp;</th>
+   </tr>
+
+   <?php foreach($this->usertickets as $userticket) : ?>
+   
+   <?php if($this->escape($userticket->admin1)== $this->escape($this->username)
+         || $this->escape($userticket->admin2)== $this->escape($this->username)
+         || $this->escape($userticket->admin3)== $this->escape($this->username)) { ?>
+   
+   <tr style="background-color: lightblue;">
+      <td><?php echo $this->escape($userticket->author);?></td>
+      <td><?php echo $this->escape($userticket->cathegory);?></td>
+      <td><?php echo $this->escape($userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($userticket->send_data);?></td>
+      <td><?php echo $this->escape($userticket->end_data);?></td>
+      <td><?php echo $this->escape($userticket->status);?></td>
+      <td><?php echo $this->escape($userticket->ip_number);?></td>
+      <td><?php echo $this->escape($userticket->admin1);
+                    if(!(is_null($this->escape($userticket->admin2))))
+                        {   ?> <br/><?php
+                            echo $this->escape($userticket->admin2);
+                        }
+                    if(!(is_null($this->escape($userticket->admin3))))
+                        {   ?> <br/><?php
+                            echo $this->escape($userticket->admin3);
+                        }
+      ?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($userticket->send_data);
+            $enddata = $this->escape($userticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($userticket->end_data)== '0000-00-00')
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+      <td>
+         <a href="<?php echo $this->baseUrl; ?>/admin/edituser/id/<?php
+            echo $userticket->id;?>">Edytuj</a>
+         <a href="<?php echo $this->baseUrl; ?>/admin/deleteuser/id/<?php
+            echo $userticket->id;?>">Usuń</a>
+      </td>
+   </tr>
+   
+   <?php } ?>
+   
+   <?php endforeach; ?>
+
+</table>
+
+<h2>Tickety Gości</h2>
+   
+<table>
+   <tr>
+      <th>Autor</th>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>
+      <th>Numer IP</th>
+      <th>Admini</th>
+      <th>Czas realizacji</th>
+      <th>&nbsp;</th>
+   </tr>
+
+   <?php foreach($this->guesttickets as $guestticket) : ?>
+   
+   <?php if($this->escape($guestticket->admin1)== $this->escape($this->username)
+         || $this->escape($guestticket->admin2)== $this->escape($this->username)
+         || $this->escape($guestticket->admin3)== $this->escape($this->username)) { ?>
+   
+   <tr style="background-color: lightgreen;">
+      <td><?php echo $this->escape($guestticket->author);?></td>
+      <td><?php echo $this->escape($guestticket->cathegory);?></td>
+      <td><?php echo $this->escape($guestticket->problem_describe);?></td>
+      <td><?php echo $this->escape($guestticket->send_data);?></td>
+      <td><?php echo $this->escape($guestticket->end_data);?></td>
+      <td><?php echo $this->escape($guestticket->status);?></td>
+      <td><?php echo $this->escape($guestticket->ip_number);?></td>
+      <td><?php echo $this->escape($guestticket->admin1);
+                    if(!(is_null($this->escape($guestticket->admin2))))
+                        {   ?> <br/><?php
+                            echo $this->escape($guestticket->admin2);
+                        }
+                    if(!(is_null($this->escape($guestticket->admin3))))
+                        {   ?> <br/><?php
+                            echo $this->escape($guestticket->admin3);
+                        }
+      ?></td>
+      <td>
+          <?php
+            
+            $senddata = $this->escape($guestticket->send_data);
+            $enddata = $this->escape($guestticket->end_data);
+            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
+            
+            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
+            
+            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
+          
+            if($this->escape($guestticket->end_data)== '0000-00-00')
+            {
+                echo $pozostalo1." dni";
+            }
+            else
+            {
+                echo $pozostalo2." dni";
+            }
+          ?>
+      </td>
+      <td>
+         <a href="<?php echo $this->baseUrl; ?>/admin/editguest/id/<?php
+            echo $guestticket->id;?>">Edytuj</a>
+         <a href="<?php echo $this->baseUrl; ?>/admin/deleteguest/id/<?php
+            echo $guestticket->id;?>">Usuń</a>
+      </td>
+   </tr>
+   
+   <?php } ?>
+   
+   <?php endforeach; ?> 
+
+</table> 
+
+   <hr>
+
+   <h1 class="nagl">Tickety Użytkowników</h1>
+   
+   <h2>Aktualne</h2>
+   
+<table>
+   <tr>
+      <th>Autor</th>
+      <th>Kategoria</th>
+      <th>Opis problemu</th>
+      <th>Data wysłania</th>
+      <th>Data zamknięcia</th>
+      <th>Status</th>
+      <th>Numer IP</th>
+      <th>Admini</th>
       <th>Czas realizacji</th>
       <th>&nbsp;</th>
    </tr>
@@ -35,6 +189,16 @@
       <td><?php echo $this->escape($userticket->end_data);?></td>
       <td><?php echo $this->escape($userticket->status);?></td>
       <td><?php echo $this->escape($userticket->ip_number);?></td>
+      <td><?php echo $this->escape($userticket->admin1);
+                    if(!(is_null($this->escape($userticket->admin2))))
+                        {   ?> <br/><?php
+                            echo $this->escape($userticket->admin2);
+                        }
+                    if(!(is_null($this->escape($userticket->admin3))))
+                        {   ?> <br/><?php
+                            echo $this->escape($userticket->admin3);
+                        }
+      ?></td>
       <td>
           <?php
             
@@ -72,8 +236,7 @@
    
    
 <h2>Zakończone</h2>
-   
-   <!-- może można jakoś zmienić tytuł tabeli w table -->
+
 <table>
    <tr>
       <th>Autor</th>
@@ -81,8 +244,9 @@
       <th>Opis problemu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
-      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Status</th>
       <th>Numer IP</th>
+      <th>Admini</th>
       <th>Czas realizacji</th>
       <th>&nbsp;</th>
    </tr>
@@ -99,6 +263,16 @@
       <td><?php echo $this->escape($userticket->end_data);?></td>
       <td><?php echo $this->escape($userticket->status);?></td>
       <td><?php echo $this->escape($userticket->ip_number);?></td>
+      <td><?php echo $this->escape($userticket->admin1);
+                    if(!(is_null($this->escape($userticket->admin2))))
+                        {   ?> <br/><?php
+                            echo $this->escape($userticket->admin2);
+                        }
+                    if(!(is_null($this->escape($userticket->admin3))))
+                        {   ?> <br/><?php
+                            echo $this->escape($userticket->admin3);
+                        }
+      ?></td>
       <td>
           <?php
             
@@ -139,8 +313,6 @@
    
    <h2>Aktualne</h2>
    
-   <!-- może można jakoś zmienić tytuł tabeli w table -->
-   
 <table>
    <tr>
       <th>Autor</th>
@@ -148,7 +320,7 @@
       <th>Opis problemu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
-      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Status</th>
       <th>Numer IP</th>
       <th>Admini</th>
       <th>Czas realizacji</th>
@@ -215,8 +387,6 @@
    
 <h2>Zakończone</h2>
    
-   <!-- może można jakoś zmienić tytuł tabeli w table -->
-   
 <table>
    <tr>
       <th>Autor</th>
@@ -224,7 +394,7 @@
       <th>Opis problemu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
-      <th>Status</th>  <!-- status i ip zgła trzeba zamienić w bazie danych na angielskie wyrazy -->
+      <th>Status</th>
       <th>Numer IP</th>
       <th>Admini</th>
       <th>Czas realizacji</th>

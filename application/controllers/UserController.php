@@ -123,10 +123,14 @@ $paswd = $request->getParam('password');
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
-      $ip_number = trim($filter->filter($this->_request->getPost('ip_number'))); 
+      $ip_number = trim($filter->filter($this->_request->getPost('ip_number')));  
+      $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
+      $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
+      $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
 
       if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '') {
+              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
+                 && $admin2 != '' && $admin3 != '') {
          $data = array(
            'author' => $author,
            'cathegory' => $cathegory,
@@ -135,6 +139,9 @@ $paswd = $request->getParam('password');
            'end_data' => $end_data,
            'status' => $status,
            'ip_number' => $ip_number,
+           'admin1' => $admin1,
+           'admin2' => $admin2,
+           'admin3' => $admin3,
          );
          $userticket = new Userticket();
          $userticket->insert($data);
@@ -152,6 +159,9 @@ $paswd = $request->getParam('password');
    $this->view->userticket->end_data = ''; 
    $this->view->userticket->status = ''; 
    $this->view->userticket->ip_number = ''; 
+   $this->view->userticket->admin1 = ''; 
+   $this->view->userticket->admin2 = ''; 
+   $this->view->userticket->admin3 = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';
@@ -169,11 +179,12 @@ $paswd = $request->getParam('password');
   
     $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
-	//$real_name	= $user->real_name;
 	$username	= $user->username;
+        $userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/user/logout';
 
 	$this->view->assign('username', $username);
+        $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
       
       

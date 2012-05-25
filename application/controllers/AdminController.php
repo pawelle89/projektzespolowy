@@ -108,7 +108,10 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
-      $ip_number = trim($filter->filter($this->_request->getPost('ip_number'))); 
+      $ip_number = trim($filter->filter($this->_request->getPost('ip_number')));  
+      $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
+      $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
+      $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
 
       // jeżeli admin wybierze status zakończony to data musi się uzupełnić
       // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
@@ -129,7 +132,8 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '') {
+              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
+                 && $admin2 != '' && $admin3 != '') {
             $data = array(
                'author' => $author,
                'cathegory' => $cathegory,
@@ -138,6 +142,9 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'end_data' => $end_data,
                'status' => $status,
                'ip_number' => $ip_number,
+               'admin1' => $admin1,
+               'admin2' => $admin2,
+               'admin3' => $admin3,
             );
             $where = 'id = ' . $id;
             $userticket->update($data, $where); 
@@ -358,9 +365,11 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
         $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
 	$username	= $user->username;
+        $userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/admin/logout';
 
 	$this->view->assign('username', $username);
+        $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
       
    // $this->view->assign('name', 'Seik');
