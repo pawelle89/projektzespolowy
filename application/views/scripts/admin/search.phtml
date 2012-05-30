@@ -4,162 +4,23 @@
 <h1>Witaj, <?=$this->escape($this->username);?></h1>
 
 <a href='<?=$this->escape($this->urllogout);?>'>Wyloguj się</a>
-<br/>
-<a href='<?=$this->escape($this->urlsearch);?>'>Wyszukaj Tickety</a>
 
-<h1 class="nagl">Twoje Tickety Do Zrealizowania</h1>
-   
-   <h2>Tickety Użytkowników</h2>
-   
-<table>
-   <tr>
-      <th>Autor</th>
-      <th>Kategoria</th>
-      <th>Opis problemu</th>
-      <th>Data wysłania</th>
-      <th>Data zamknięcia</th>
-      <th>Status</th>
-      <th>Numer IP</th>
-      <th>Admini</th>
-      <th>Czas realizacji</th>
-      <th>&nbsp;</th>
-   </tr>
 
-   <?php foreach($this->usertickets as $userticket) : ?>
-   
-   <?php if($this->escape($userticket->admin1)== $this->escape($this->username)
-         || $this->escape($userticket->admin2)== $this->escape($this->username)
-         || $this->escape($userticket->admin3)== $this->escape($this->username)) { ?>
-   
-   <tr style="background-color: lightblue;">
-      <td><?php echo $this->escape($userticket->author);?></td>
-      <td><?php echo $this->escape($userticket->cathegory);?></td>
-      <td><?php echo $this->escape($userticket->problem_describe);?></td>
-      <td><?php echo $this->escape($userticket->send_data);?></td>
-      <td><?php echo $this->escape($userticket->end_data);?></td>
-      <td><?php echo $this->escape($userticket->status);?></td>
-      <td><?php echo $this->escape($userticket->ip_number);?></td>
-      <td><?php echo $this->escape($userticket->admin1);
-                    if(!(is_null($this->escape($userticket->admin2))))
-                        {   ?> <br/><?php
-                            echo $this->escape($userticket->admin2);
-                        }
-                    if(!(is_null($this->escape($userticket->admin3))))
-                        {   ?> <br/><?php
-                            echo $this->escape($userticket->admin3);
-                        }
-      ?></td>
-      <td>
-          <?php
-            
-            $senddata = $this->escape($userticket->send_data);
-            $enddata = $this->escape($userticket->end_data);
-            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
-            
-            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
-            
-            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
-          
-            if($this->escape($userticket->end_data)== '0000-00-00')
-            {
-                echo $pozostalo1." dni";
-            }
-            else
-            {
-                echo $pozostalo2." dni";
-            }
-          ?>
-      </td>
-      <td>
-         <a href="<?php echo $this->baseUrl; ?>/admin/edituser/id/<?php
-            echo $userticket->id;?>">Edytuj</a>
-         <a href="<?php echo $this->baseUrl; ?>/admin/deleteuser/id/<?php
-            echo $userticket->id;?>">Usuń</a>
-      </td>
-   </tr>
-   
-   <?php } ?>
-   
-   <?php endforeach; ?>
 
-</table>
 
-<h2>Tickety Gości</h2>
-   
-<table>
-   <tr>
-      <th>Autor</th>
-      <th>Kategoria</th>
-      <th>Opis problemu</th>
-      <th>Data wysłania</th>
-      <th>Data zamknięcia</th>
-      <th>Status</th>
-      <th>Numer IP</th>
-      <th>Admini</th>
-      <th>Czas realizacji</th>
-      <th>&nbsp;</th>
-   </tr>
+<form method='post' action='<?=$this->escape($this->action);?>'>
+  <table>
+    <tr>
+	  <td><?=$this->escape($this->search);?></td>
+	  <td><input type='text' name='label_search'></td>
+	</tr>
+  </table>
+    <br/>
+  <input type='submit' name='search' value='Szukaj'>
+  </form>
 
-   <?php foreach($this->guesttickets as $guestticket) : ?>
-   
-   <?php if($this->escape($guestticket->admin1)== $this->escape($this->username)
-         || $this->escape($guestticket->admin2)== $this->escape($this->username)
-         || $this->escape($guestticket->admin3)== $this->escape($this->username)) { ?>
-   
-   <tr style="background-color: lightgreen;">
-      <td><?php echo $this->escape($guestticket->author);?></td>
-      <td><?php echo $this->escape($guestticket->cathegory);?></td>
-      <td><?php echo $this->escape($guestticket->problem_describe);?></td>
-      <td><?php echo $this->escape($guestticket->send_data);?></td>
-      <td><?php echo $this->escape($guestticket->end_data);?></td>
-      <td><?php echo $this->escape($guestticket->status);?></td>
-      <td><?php echo $this->escape($guestticket->ip_number);?></td>
-      <td><?php echo $this->escape($guestticket->admin1);
-                    if(!(is_null($this->escape($guestticket->admin2))))
-                        {   ?> <br/><?php
-                            echo $this->escape($guestticket->admin2);
-                        }
-                    if(!(is_null($this->escape($guestticket->admin3))))
-                        {   ?> <br/><?php
-                            echo $this->escape($guestticket->admin3);
-                        }
-      ?></td>
-      <td>
-          <?php
-            
-            $senddata = $this->escape($guestticket->send_data);
-            $enddata = $this->escape($guestticket->end_data);
-            $obecna_data = date("Y-m-d"); // pobieranie aktualnej daty
-            
-            $pozostalo1 = (strtotime($obecna_data) - strtotime($senddata)) / (60*60*24);
-            
-            $pozostalo2 = (strtotime($enddata) - strtotime($senddata)) / (60*60*24);
-          
-            if($this->escape($guestticket->end_data)== '0000-00-00')
-            {
-                echo $pozostalo1." dni";
-            }
-            else
-            {
-                echo $pozostalo2." dni";
-            }
-          ?>
-      </td>
-      <td>
-         <a href="<?php echo $this->baseUrl; ?>/admin/editguest/id/<?php
-            echo $guestticket->id;?>">Edytuj</a>
-         <a href="<?php echo $this->baseUrl; ?>/admin/deleteguest/id/<?php
-            echo $guestticket->id;?>">Usuń</a>
-      </td>
-   </tr>
-   
-   <?php } ?>
-   
-   <?php endforeach; ?> 
 
-</table> 
 
-   <hr>
 
    <h1 class="nagl">Tickety Użytkowników</h1>
    
@@ -181,7 +42,17 @@
 
    <?php foreach($this->usertickets as $userticket) : ?>
    
-   <?php if($this->escape($userticket->status)!= 'zakończony') { ?>
+   <?php if(($this->escape($userticket->author)== $this->escape($this->label_search)
+         |$this->escape($userticket->cathegory)== $this->escape($this->label_search)
+         |$this->escape($userticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($userticket->send_data)== $this->escape($this->label_search)
+         |$this->escape($userticket->end_data)== $this->escape($this->label_search)
+         |$this->escape($userticket->status)== $this->escape($this->label_search)
+         |$this->escape($userticket->ip_number)== $this->escape($this->label_search)
+         |$this->escape($userticket->admin1)== $this->escape($this->label_search)
+         |$this->escape($userticket->admin2)== $this->escape($this->label_search)
+         |$this->escape($userticket->admin3)== $this->escape($this->label_search))
+           && $this->escape($userticket->status)!= 'zakończony') { ?>
    
    <tr style="background-color: lightblue;">
       <td><?php echo $this->escape($userticket->author);?></td>
@@ -255,7 +126,17 @@
 
    <?php foreach($this->usertickets as $userticket) : ?>
    
-   <?php if($this->escape($userticket->status)== 'zakończony') { ?>
+   <?php if(($this->escape($userticket->author)== $this->escape($this->label_search)
+         |$this->escape($userticket->cathegory)== $this->escape($this->label_search)
+         |$this->escape($userticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($userticket->send_data)== $this->escape($this->label_search)
+         |$this->escape($userticket->end_data)== $this->escape($this->label_search)
+         |$this->escape($userticket->status)== $this->escape($this->label_search)
+         |$this->escape($userticket->ip_number)== $this->escape($this->label_search)
+         |$this->escape($userticket->admin1)== $this->escape($this->label_search)
+         |$this->escape($userticket->admin2)== $this->escape($this->label_search)
+         |$this->escape($userticket->admin3)== $this->escape($this->label_search))
+           && $this->escape($userticket->status)== 'zakończony') { ?>
    
    <tr style="background-color: lightblue;">
       <td><?php echo $this->escape($userticket->author);?></td>
@@ -332,7 +213,17 @@
 
    <?php foreach($this->guesttickets as $guestticket) : ?>
    
-   <?php if($this->escape($guestticket->status)!= 'zakończony') { ?>
+   <?php if(($this->escape($guestticket->author)== $this->escape($this->label_search)
+         |$this->escape($guestticket->cathegory)== $this->escape($this->label_search)
+         |$this->escape($guestticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($guestticket->send_data)== $this->escape($this->label_search)
+         |$this->escape($guestticket->end_data)== $this->escape($this->label_search)
+         |$this->escape($guestticket->status)== $this->escape($this->label_search)
+         |$this->escape($guestticket->ip_number)== $this->escape($this->label_search)
+         |$this->escape($guestticket->admin1)== $this->escape($this->label_search)
+         |$this->escape($guestticket->admin2)== $this->escape($this->label_search)
+         |$this->escape($guestticket->admin3)== $this->escape($this->label_search))
+           && $this->escape($guestticket->status)!= 'zakończony') { ?>
    
    <tr style="background-color: lightgreen;">
       <td><?php echo $this->escape($guestticket->author);?></td>
@@ -406,7 +297,17 @@
 
    <?php foreach($this->guesttickets as $guestticket) : ?>
    
-   <?php if($this->escape($guestticket->status)== 'zakończony') { ?>
+   <?php if(($this->escape($guestticket->author)== $this->escape($this->label_search)
+         |$this->escape($guestticket->cathegory)== $this->escape($this->label_search)
+         |$this->escape($guestticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($guestticket->send_data)== $this->escape($this->label_search)
+         |$this->escape($guestticket->end_data)== $this->escape($this->label_search)
+         |$this->escape($guestticket->status)== $this->escape($this->label_search)
+         |$this->escape($guestticket->ip_number)== $this->escape($this->label_search)
+         |$this->escape($guestticket->admin1)== $this->escape($this->label_search)
+         |$this->escape($guestticket->admin2)== $this->escape($this->label_search)
+         |$this->escape($guestticket->admin3)== $this->escape($this->label_search))
+           && $this->escape($guestticket->status)== 'zakończony') { ?>
    
    <tr style="background-color: lightgreen;">
       <td><?php echo $this->escape($guestticket->author);?></td>

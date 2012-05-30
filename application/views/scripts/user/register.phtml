@@ -1,0 +1,25 @@
+<?php echo $this->render('header.phtml'); ?>
+
+  <h1><?=$this->escape($this->title);?></h1>
+  <div id="description">
+    <?=$this->escape($this->description);?>
+  </div>
+  <form name="register" method="post" action="<?=$this->escape($this->action)?>">
+  <table>	
+    <tr>
+	  <td><?=$this->escape($this->label_uname)?></td>
+	  <td><input type="text" name="user_name"></td>
+	</tr>
+    <tr>
+	  <td><?=$this->escape($this->label_pass)?></td>
+	  <td><input type="password" name="password"></td>
+	</tr>	
+    <tr>
+	  <td><?=$this->escape($this->e_mail)?></td>
+	  <td><input type="text" name="e_mail"></td>
+	</tr>
+  </table>
+  <input type="submit" name="submit" value="<?=$this->escape($this->label_submit);?>">
+  </form>
+  
+<?php echo $this->render('footer.phtml'); ?>

@@ -39,10 +39,7 @@ $this->_redirect('/index/index');
 	$this->view->assign('username', $username);
 	$this->view->assign('urllogout',$logoutUrl);
 }
-
-
-    
-    
+ 
     public function authAction(){
    $request 	= $this->getRequest();
    $registry 	= Zend_Registry::getInstance();
@@ -208,14 +205,37 @@ $this->view->assign('action', $request->getBaseURL()."/user/auth");
     
  }
   
-  public function nameAction()
-  {
-  
+  public function registerAction()
+ {
+   $request = $this->getRequest();
+
+   $this->view->assign('action',"process");
+   $this->view->assign('title','Rejestracjia');	
+   $this->view->assign('label_uname','Nazwa Użytkownika');	
+   $this->view->assign('label_pass','Hasło');
+   $this->view->assign('e_mail','e-mail');
+   $this->view->assign('label_submit','Potwierdź');		
+   $this->view->assign('description','Proszę o wypełnić cały formularz:');		
+ }
+
+  public function processAction()
+ {
+$registry = Zend_Registry::getInstance();  
+	$DB = $registry['DB'];
+	
     $request = $this->getRequest();
-    $this->view->assign('name', $request->getParam('username'));
-    $this->view->assign('gender', $request->getParam('gender'));	  
-		
-    $this->view->assign('title', 'User Name');
-  }  
+
+$data = array('username' => $request->getParam('username'),
+              'password' => md5($request->getParam('password')),
+                'e_mail' => $request->getParam('e_mail')//,
+		//'role' => user
+              );
+   $DB->insert('users', $data);
+
+   $this->view->assign('title','Rejestracja w toku.');
+$this->view->assign('description','Rejestracja powiodła się!');  	
+
+ }
+
 }
 ?>

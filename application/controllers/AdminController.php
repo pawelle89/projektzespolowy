@@ -13,11 +13,7 @@ class AdminController extends Zend_Controller_Action
         $this->view->baseUrl = $this->_request->getBaseUrl();
         
         Zend_Loader::loadClass('Userticket');
-        Zend_Loader::loadClass('Guestticket');
-        
-        
-  
-    
+        Zend_Loader::loadClass('Guestticket'); 
     }
     
     public function logoutAction()
@@ -219,9 +215,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       {
           $end_data = $obecna_data;
       }
-      
-      
-      
+  
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
@@ -273,7 +267,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
             $this->_redirect('/admin/loginform');
         }
         }
-       
+        
       $this->view->assign('title','Usuń Ticket');
       
       $userticket = new Userticket();
@@ -349,7 +343,44 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
     
   public function indexAction()
   {
-      $auth		= Zend_Auth::getInstance(); 
+      $auth = Zend_Auth::getInstance(); 
+	
+	if(!$auth->hasIdentity()){
+	  $this->_redirect('/admin/loginform');
+	}
+        else {
+            $request = $this->getRequest(); 
+	$role		= $auth->getIdentity();
+        if(!($role->role == "admin")){
+            $this->_redirect('/admin/loginform');
+        }
+        }
+        
+        $request = $this->getRequest(); 
+	$user		= $auth->getIdentity();
+	$username	= $user->username;
+        $userrole       = $user->userrole; // nie chce działać
+	$logoutUrl  = $request->getBaseURL().'/admin/logout';
+        $searchUrl  = $request->getBaseURL().'/admin/search';
+
+	$this->view->assign('username', $username);
+        $this->view->assign('userrole', $userrole); // nie chce działać
+	$this->view->assign('urllogout',$logoutUrl);
+        $this->view->assign('urlsearch',$searchUrl);
+      
+   // $this->view->assign('name', 'Seik');
+    $this->view->assign('title', 'Lista tiketów');
+    
+    $userticket = new Userticket();
+    $this->view->usertickets = $userticket->fetchAll();
+    
+    $guestticket = new Guestticket();
+    $this->view->guesttickets = $guestticket->fetchAll();
+  }
+  
+  public function searchAction()
+  {
+      $auth = Zend_Auth::getInstance(); 
 	
 	if(!$auth->hasIdentity()){
 	  $this->_redirect('/admin/loginform');
@@ -371,9 +402,24 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
 	$this->view->assign('username', $username);
         $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
+        
+        $request = $this->getRequest();  
+    $this->view->assign('action', $request->getBaseURL()."/admin/search");
+    $this->view->assign('search', 'Szukana fraza'); 
+   
+   if ($this->_request->isPost()) {
+      Zend_Loader::loadClass('Zend_Filter_StripTags');
+      $filter = new Zend_Filter_StripTags(); 
+
+
+      $label_search = trim($filter->filter($this->_request->getPost('label_search')));
+   
+   
+   $this->view->assign('label_search', $label_search);
+   }
       
    // $this->view->assign('name', 'Seik');
-    $this->view->assign('title', 'Lista tiketów');
+    $this->view->assign('title', 'Wyszukaj');
     
     $userticket = new Userticket();
     $this->view->usertickets = $userticket->fetchAll();
@@ -382,5 +428,4 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
     $this->view->guesttickets = $guestticket->fetchAll();
   }
 }
-
 ?>
