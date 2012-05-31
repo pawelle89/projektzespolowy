@@ -7,7 +7,6 @@
 
 
 
-
 <form method='post' action='<?=$this->escape($this->action);?>'>
   <table>
     <tr>
@@ -21,7 +20,6 @@
 
 
 
-
    <h1 class="nagl">Tickety Użytkowników</h1>
    
    <h2>Aktualne</h2>
@@ -31,6 +29,7 @@
       <th>Autor</th>
       <th>Kategoria</th>
       <th>Opis problemu</th>
+      <th>Nazwa przedmiotu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
       <th>Status</th>
@@ -45,6 +44,7 @@
    <?php if(($this->escape($userticket->author)== $this->escape($this->label_search)
          |$this->escape($userticket->cathegory)== $this->escape($this->label_search)
          |$this->escape($userticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($userticket->subject_name)== $this->escape($this->label_search)
          |$this->escape($userticket->send_data)== $this->escape($this->label_search)
          |$this->escape($userticket->end_data)== $this->escape($this->label_search)
          |$this->escape($userticket->status)== $this->escape($this->label_search)
@@ -58,6 +58,7 @@
       <td><?php echo $this->escape($userticket->author);?></td>
       <td><?php echo $this->escape($userticket->cathegory);?></td>
       <td><?php echo $this->escape($userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($userticket->subject_name);?></td>
       <td><?php echo $this->escape($userticket->send_data);?></td>
       <td><?php echo $this->escape($userticket->end_data);?></td>
       <td><?php echo $this->escape($userticket->status);?></td>
@@ -115,6 +116,7 @@
       <th>Autor</th>
       <th>Kategoria</th>
       <th>Opis problemu</th>
+      <th>Nazwa przedmiotu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
       <th>Status</th>
@@ -129,6 +131,7 @@
    <?php if(($this->escape($userticket->author)== $this->escape($this->label_search)
          |$this->escape($userticket->cathegory)== $this->escape($this->label_search)
          |$this->escape($userticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($userticket->subject_name)== $this->escape($this->label_search)
          |$this->escape($userticket->send_data)== $this->escape($this->label_search)
          |$this->escape($userticket->end_data)== $this->escape($this->label_search)
          |$this->escape($userticket->status)== $this->escape($this->label_search)
@@ -142,6 +145,7 @@
       <td><?php echo $this->escape($userticket->author);?></td>
       <td><?php echo $this->escape($userticket->cathegory);?></td>
       <td><?php echo $this->escape($userticket->problem_describe);?></td>
+      <td><?php echo $this->escape($userticket->subject_name);?></td>
       <td><?php echo $this->escape($userticket->send_data);?></td>
       <td><?php echo $this->escape($userticket->end_data);?></td>
       <td><?php echo $this->escape($userticket->status);?></td>
@@ -202,6 +206,7 @@
       <th>Autor</th>
       <th>Kategoria</th>
       <th>Opis problemu</th>
+      <th>Nazwa przedmiotu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
       <th>Status</th>
@@ -216,6 +221,7 @@
    <?php if(($this->escape($guestticket->author)== $this->escape($this->label_search)
          |$this->escape($guestticket->cathegory)== $this->escape($this->label_search)
          |$this->escape($guestticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($guestticket->subject_name)== $this->escape($this->label_search)
          |$this->escape($guestticket->send_data)== $this->escape($this->label_search)
          |$this->escape($guestticket->end_data)== $this->escape($this->label_search)
          |$this->escape($guestticket->status)== $this->escape($this->label_search)
@@ -229,6 +235,7 @@
       <td><?php echo $this->escape($guestticket->author);?></td>
       <td><?php echo $this->escape($guestticket->cathegory);?></td>
       <td><?php echo $this->escape($guestticket->problem_describe);?></td>
+      <td><?php echo $this->escape($guestticket->subject_name);?></td>
       <td><?php echo $this->escape($guestticket->send_data);?></td>
       <td><?php echo $this->escape($guestticket->end_data);?></td>
       <td><?php echo $this->escape($guestticket->status);?></td>
@@ -286,6 +293,7 @@
       <th>Autor</th>
       <th>Kategoria</th>
       <th>Opis problemu</th>
+      <th>Nazwa przedmiotu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
       <th>Status</th>
@@ -300,6 +308,7 @@
    <?php if(($this->escape($guestticket->author)== $this->escape($this->label_search)
          |$this->escape($guestticket->cathegory)== $this->escape($this->label_search)
          |$this->escape($guestticket->problem_describe)== $this->escape($this->label_search)
+         |$this->escape($guestticket->subject_name)== $this->escape($this->label_search)
          |$this->escape($guestticket->send_data)== $this->escape($this->label_search)
          |$this->escape($guestticket->end_data)== $this->escape($this->label_search)
          |$this->escape($guestticket->status)== $this->escape($this->label_search)
@@ -313,6 +322,7 @@
       <td><?php echo $this->escape($guestticket->author);?></td>
       <td><?php echo $this->escape($guestticket->cathegory);?></td>
       <td><?php echo $this->escape($guestticket->problem_describe);?></td>
+      <td><?php echo $this->escape($guestticket->subject_name);?></td>
       <td><?php echo $this->escape($guestticket->send_data);?></td>
       <td><?php echo $this->escape($guestticket->end_data);?></td>
       <td><?php echo $this->escape($guestticket->status);?></td>

@@ -124,10 +124,11 @@ $paswd = $request->getParam('password');
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
       if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '') {
+                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
          $data = array(
            'author' => $author,
            'cathegory' => $cathegory,
@@ -139,6 +140,7 @@ $paswd = $request->getParam('password');
            'admin1' => $admin1,
            'admin2' => $admin2,
            'admin3' => $admin3,
+           'subject_name' => $subject_name,
          );
          $userticket = new Userticket();
          $userticket->insert($data);
@@ -158,7 +160,8 @@ $paswd = $request->getParam('password');
    $this->view->userticket->ip_number = ''; 
    $this->view->userticket->admin1 = ''; 
    $this->view->userticket->admin2 = ''; 
-   $this->view->userticket->admin3 = ''; 
+   $this->view->userticket->admin3 = '';  
+   $this->view->userticket->subject_name = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';

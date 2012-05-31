@@ -108,6 +108,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
       // jeżeli admin wybierze status zakończony to data musi się uzupełnić
       // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
@@ -129,7 +130,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '') {
+                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
             $data = array(
                'author' => $author,
                'cathegory' => $cathegory,
@@ -141,6 +142,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'admin1' => $admin1,
                'admin2' => $admin2,
                'admin3' => $admin3,
+           'subject_name' => $subject_name,
             );
             $where = 'id = ' . $id;
             $userticket->update($data, $where); 
@@ -198,6 +200,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
       
        // jeżeli admin wybierze status zakończony to data musi się uzupełnić
@@ -219,7 +222,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       if ($id !== false) {
          if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '') {
+                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
             $data = array(
                'author' => $author,
                'cathegory' => $cathegory,
@@ -231,6 +234,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'admin1' => $admin1,
                'admin2' => $admin2,
                'admin3' => $admin3,
+           'subject_name' => $subject_name,
             );
             $where = 'id = ' . $id;
             $guestticket->update($data, $where); 

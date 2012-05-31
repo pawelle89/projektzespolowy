@@ -41,10 +41,11 @@ class IndexController extends Zend_Controller_Action
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
       if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
               && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '') {
+                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
          $data = array(
            'author' => $author,
            'cathegory' => $cathegory,
@@ -56,6 +57,7 @@ class IndexController extends Zend_Controller_Action
            'admin1' => $admin1,
            'admin2' => $admin2,
            'admin3' => $admin3,
+           'subject_name' => $subject_name,
          );
          $guestticket = new Guestticket();
          $guestticket->insert($data);
@@ -76,6 +78,7 @@ class IndexController extends Zend_Controller_Action
    $this->view->guestticket->admin1 = ''; 
    $this->view->guestticket->admin2 = ''; 
    $this->view->guestticket->admin3 = ''; 
+   $this->view->guestticket->subject_name = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';

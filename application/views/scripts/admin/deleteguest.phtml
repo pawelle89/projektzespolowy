@@ -13,6 +13,7 @@
       <th>Autor</th>
       <th>Kategoria</th>
       <th>Opis problemu</th>
+      <th>Nazwa przedmiotu</th>
       <th>Data wysłania</th>
       <th>Data zamknięcia</th>
       <th>Status</th>
@@ -24,6 +25,7 @@
       <td><?php echo $this->escape($this->guestticket->author);?></td>
       <td><?php echo $this->escape($this->guestticket->cathegory);?></td>
       <td><?php echo $this->escape($this->guestticket->problem_describe);?></td>
+      <td><?php echo $this->escape($this->guestticket->subject_name);?></td>
       <td><?php echo $this->escape($this->guestticket->send_data);?></td>
       <td><?php echo $this->escape($this->guestticket->end_data);?></td>
       <td><?php echo $this->escape($this->guestticket->status);?></td>

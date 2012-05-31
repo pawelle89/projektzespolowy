@@ -20,7 +20,12 @@
       <label for="problem_describe">Opis problemu</label>
       <input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
          echo $this->escape($this->problem_describe);?>"/>
-   </div>
+   </div><br/>
+   
+   <div>
+       <label for="subject_name">Nazwa przedmiotu</label>
+      <input type="text" name="subject_name"/>
+   </div><br/>
     
    <div>
       <!--<label for="send_data">Data wysłania</label>-->
@@ -47,17 +52,17 @@
    <div>
       <label hidden for="admin1">Admin 1</label>
       <input type="hidden" name="admin1" value="-"/>
-   </div><br/>  
+   </div>  
    
    <div>
       <label hidden for="admin2">Admin 2</label>
       <input type="hidden" name="admin2" value="-"/>
-   </div><br/>  
+   </div> 
    
    <div>
        <label hidden for="admin3">Admin 3</label>
       <input type="hidden" name="admin3" value="-"/>
-   </div><br/>
+   </div>
     
     
    <div id="formbutton">
