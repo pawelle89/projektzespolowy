@@ -28,9 +28,10 @@
 
    <?php foreach($this->usertickets as $userticket) : ?>
    
-   <?php if($this->escape($userticket->admin1)== $this->escape($this->username)
+   <?php if(($this->escape($userticket->admin1)== $this->escape($this->username)
          || $this->escape($userticket->admin2)== $this->escape($this->username)
-         || $this->escape($userticket->admin3)== $this->escape($this->username)) { ?>
+         || $this->escape($userticket->admin3)== $this->escape($this->username))
+         && $this->escape($userticket->status)!= 'zakończony') { ?>
    
    <tr style="background-color: lightblue;">
       <td><?php echo $this->escape($userticket->author);?></td>
@@ -105,9 +106,10 @@
 
    <?php foreach($this->guesttickets as $guestticket) : ?>
    
-   <?php if($this->escape($guestticket->admin1)== $this->escape($this->username)
+   <?php if(($this->escape($guestticket->admin1)== $this->escape($this->username)
          || $this->escape($guestticket->admin2)== $this->escape($this->username)
-         || $this->escape($guestticket->admin3)== $this->escape($this->username)) { ?>
+         || $this->escape($guestticket->admin3)== $this->escape($this->username))
+         && $this->escape($guestticket->status)!= 'zakończony') { ?>
    
    <tr style="background-color: lightgreen;">
       <td><?php echo $this->escape($guestticket->author);?></td>

@@ -34,6 +34,7 @@ class IndexController extends Zend_Controller_Action
       $author = trim($author);
       $cathegory = trim($filter->filter($this->_request->getPost('cathegory'))); 
       $problem_describe = trim($filter->filter($this->_request->getPost('problem_describe'))); 
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
@@ -41,15 +42,15 @@ class IndexController extends Zend_Controller_Action
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
-      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
-      if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
+      if ($author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != '' 
+              && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
+              && $admin1 != '' && $admin2 != '' && $admin3 != '') {
          $data = array(
            'author' => $author,
            'cathegory' => $cathegory,
            'problem_describe' => $problem_describe,
+           'subject_name' => $subject_name,
            'send_data' => $send_data,
            'end_data' => $end_data,
            'status' => $status,
@@ -57,7 +58,6 @@ class IndexController extends Zend_Controller_Action
            'admin1' => $admin1,
            'admin2' => $admin2,
            'admin3' => $admin3,
-           'subject_name' => $subject_name,
          );
          $guestticket = new Guestticket();
          $guestticket->insert($data);
@@ -71,6 +71,7 @@ class IndexController extends Zend_Controller_Action
    $this->view->guestticket->author = '';
    $this->view->guestticket->cathegory = ''; 
    $this->view->guestticket->problem_describe = ''; 
+   $this->view->guestticket->subject_name = ''; 
    $this->view->guestticket->send_data = ''; 
    $this->view->guestticket->end_data = ''; 
    $this->view->guestticket->status = ''; 
@@ -78,7 +79,6 @@ class IndexController extends Zend_Controller_Action
    $this->view->guestticket->admin1 = ''; 
    $this->view->guestticket->admin2 = ''; 
    $this->view->guestticket->admin3 = ''; 
-   $this->view->guestticket->subject_name = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';

@@ -4,6 +4,7 @@ require_once 'Userticket.php';
 require_once 'Guestticket.php';
 require_once 'Zend/Auth.php';
 require_once 'Zend/Auth/Adapter/DbTable.php';
+require_once 'Zend/Mail/Storage/Pop3.php';
 
 class AdminController extends Zend_Controller_Action
 {
@@ -69,8 +70,55 @@ public function loginformAction()
 $this->view->assign('action', $request->getBaseURL()."/admin/auth");  
    $this->view->assign('title', 'Logowanie');
    $this->view->assign('username', 'Nazwa użytkownika');	
-   $this->view->assign('password', 'Hasło');	
-    
+   $this->view->assign('password', 'Hasło');
+  
+   
+   //// odbieranie ticketów ze skrzynki pocztowej
+   $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'o2.pl',
+                                         'user'     => 'awariauwm',
+                                         'password' => 'awariauwm123',
+                                         'ssl'      => 'SSL'));
+   
+   $obecna_data = date("Y-m-d");
+   
+   $i = 1;
+   
+    foreach ($mail as $message) {
+     
+         $data = array(
+           'author' => 'Mail',
+           'cathegory' => $message->subject,
+           'problem_describe' => $message->getContent(),
+           'subject_name' => '-',
+           'send_data' => $obecna_data,
+           'end_data' => '-',
+           'status' => 'oczekujący',
+           'ip_number' => '-',
+           'admin1' => '-',
+           'admin2' => '-',
+           'admin3' => '-',
+         );
+         $guestticket = new Guestticket();
+         $guestticket->insert($data);
+         
+         $mail->removeMessage($i);
+         $i++; 
+   
+   // set up an "empty" userticket
+   $this->view->guestticket = new stdClass();
+   $this->view->guestticket->id = null;
+   $this->view->guestticket->author = '';
+   $this->view->guestticket->cathegory = ''; 
+   $this->view->guestticket->problem_describe = ''; 
+   $this->view->guestticket->subject_name = ''; 
+   $this->view->guestticket->send_data = ''; 
+   $this->view->guestticket->end_data = ''; 
+   $this->view->guestticket->status = ''; 
+   $this->view->guestticket->ip_number = ''; 
+   $this->view->guestticket->admin1 = ''; 
+   $this->view->guestticket->admin2 = ''; 
+   $this->view->guestticket->admin3 = '';    
+}
  }
     
    public function edituserAction() 
@@ -101,6 +149,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $author = trim($author);
       $cathegory = trim($filter->filter($this->_request->getPost('cathegory'))); 
       $problem_describe = trim($filter->filter($this->_request->getPost('problem_describe'))); 
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
@@ -108,7 +157,6 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
-      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
       // jeżeli admin wybierze status zakończony to data musi się uzupełnić
       // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
@@ -128,13 +176,14 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       
       
       if ($id !== false) {
-         if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
+         if ($author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != '' 
+                 && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
+                 && $admin1 != ''  && $admin2 != '' && $admin3 != '') {
             $data = array(
                'author' => $author,
                'cathegory' => $cathegory,
                'problem_describe' => $problem_describe,
+               'subject_name' => $subject_name,
                'send_data' => $send_data,
                'end_data' => $end_data,
                'status' => $status,
@@ -142,7 +191,6 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'admin1' => $admin1,
                'admin2' => $admin2,
                'admin3' => $admin3,
-           'subject_name' => $subject_name,
             );
             $where = 'id = ' . $id;
             $userticket->update($data, $where); 
@@ -193,6 +241,7 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $author = trim($author);
       $cathegory = trim($filter->filter($this->_request->getPost('cathegory'))); 
       $problem_describe = trim($filter->filter($this->_request->getPost('problem_describe'))); 
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
@@ -200,7 +249,6 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
-      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
       
        // jeżeli admin wybierze status zakończony to data musi się uzupełnić
@@ -220,13 +268,14 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       }
   
       if ($id !== false) {
-         if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
+         if ($author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != '' 
+                 && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
+                 && $admin1 != '' && $admin2 != '' && $admin3 != '') {
             $data = array(
                'author' => $author,
                'cathegory' => $cathegory,
                'problem_describe' => $problem_describe,
+               'subject_name' => $subject_name,
                'send_data' => $send_data,
                'end_data' => $end_data,
                'status' => $status,
@@ -234,7 +283,6 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'admin1' => $admin1,
                'admin2' => $admin2,
                'admin3' => $admin3,
-           'subject_name' => $subject_name,
             );
             $where = 'id = ' . $id;
             $guestticket->update($data, $where); 
@@ -363,16 +411,16 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
         $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
 	$username	= $user->username;
-        $userrole       = $user->userrole; // nie chce działać
+      //  $userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/admin/logout';
         $searchUrl  = $request->getBaseURL().'/admin/search';
 
 	$this->view->assign('username', $username);
-        $this->view->assign('userrole', $userrole); // nie chce działać
+       // $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
-        $this->view->assign('urlsearch',$searchUrl);
-      
-   // $this->view->assign('name', 'Seik');
+        $this->view->assign('urlsearch',$searchUrl); 
+        
+    
     $this->view->assign('title', 'Lista tiketów');
     
     $userticket = new Userticket();

@@ -1,69 +1,69 @@
-<form action="<?php echo $this->baseUrl ?>/index/<?php
-      echo $this->action; ?>" method="post">
-   <div>
-      <!--<label for="author">Autor</label> -->
-      <input type="hidden" name="author" value="Gość"/>
-   </div><br/>
-    <br/>
-   <div>
-      <label for="cathegory">Kategoria</label>
-      <input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy" list="datalist"/>
+<form action="<?php echo $this->baseUrl ?>/index/<?php echo $this->action; ?>" method="post">
+    <table>
+        <tr hidden>
+            <!--<td><label for="author">Autor</label> </td>-->
+            <td><input type="hidden" name="author" value="Gość"/></td>
+        </tr>
+   
+   <tr>
+      <td><label for="cathegory">Kategoria</label></td>
+      <td><input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy" list="datalist"/>
       <datalist id="datalist">
           <option value="problem z komputerem w sali">
           <option value="awaria komputera pracownika">
           <option value="inne">
           <option value="awaria sieci">
-      </datalist>
-   </div><br/>
+      </datalist></td>
+   </tr>
    
-   <div>
-      <label for="problem_describe">Opis problemu</label>
-      <input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
-         echo $this->escape($this->problem_describe);?>"/>
-   </div><br/>
+   <tr>
+      <td><label for="problem_describe">Opis problemu</label></td>
+      <td><input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
+         echo $this->escape($this->problem_describe);?>"/></td>
+   </tr>
    
-   <div>
-       <label for="subject_name">Nazwa przedmiotu</label>
-      <input type="text" name="subject_name"/>
-   </div><br/>
+   <tr>
+       <td><label for="subject_name">Nazwa przedmiotu</label></td>
+       <td><input type="text" name="subject_name" value="-"/></td>
+   </tr>
     
-   <div>
+   <tr hidden>
       <!--<label for="send_data">Data wysłania</label>-->
-      <input type="hidden" name="send_data" value="<?php
-         echo date("Y-m-d");?>"/>
-   </div>
+      <td><input type="hidden" name="send_data" value="<?php
+         echo date("Y-m-d");?>"/></td>
+   </tr>
     
-   <div>
+   <tr hidden>
       <!--<label for="end_data">Data zakończenia</label>-->
-      <input type="hidden" name="end_data" value="0"/>
-   </div>
+      <td><input type="hidden" name="end_data" value="0"/></td>
+   </tr>
     
-   <div>
+   <tr hidden>
       <!--<label for="status">Status</label>-->
-      <input type="hidden" name="status" value="oczekujący"/>
-   </div>
+      <td><input type="hidden" name="status" value="oczekujący"/></td>
+   </tr>
     
-   <div>
+   <tr hidden>
       <!--<label for="ip_number">Numer IP</label>-->
-      <input type="hidden" name="ip_number" value="<?php
-         echo $_SERVER['REMOTE_ADDR'];?>"/>
-   </div><br/>     
+      <td><input type="hidden" name="ip_number" value="<?php
+         echo $_SERVER['REMOTE_ADDR'];?>"/></td>
+   </tr>   
    
-   <div>
-      <label hidden for="admin1">Admin 1</label>
-      <input type="hidden" name="admin1" value="-"/>
-   </div>  
+   <tr hidden>
+      <td><label hidden for="admin1">Admin 1</label></td>
+      <td><input type="hidden" name="admin1" value="-"/></td>
+   </tr>  
    
-   <div>
-      <label hidden for="admin2">Admin 2</label>
-      <input type="hidden" name="admin2" value="-"/>
-   </div> 
+   <tr hidden>
+      <td><label hidden for="admin2">Admin 2</label></td>
+      <td><input type="hidden" name="admin2" value="-"/></td>
+   </tr> 
    
-   <div>
-       <label hidden for="admin3">Admin 3</label>
-      <input type="hidden" name="admin3" value="-"/>
-   </div>
-    
+   <tr hidden>
+      <td><label hidden for="admin3">Admin 3</label></td>
+      <td><input type="hidden" name="admin3" value="-"/></td>
+   </tr>
+    </table><br/>
     
    <div id="formbutton">
       <input type="hidden" name="id" value="<?php

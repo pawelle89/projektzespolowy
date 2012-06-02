@@ -117,6 +117,7 @@ $paswd = $request->getParam('password');
       $author = trim($author);
       $cathegory = trim($filter->filter($this->_request->getPost('cathegory'))); 
       $problem_describe = trim($filter->filter($this->_request->getPost('problem_describe'))); 
+      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
@@ -124,15 +125,15 @@ $paswd = $request->getParam('password');
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
-      $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
 
-      if ($author != '' && $cathegory != '' && $problem_describe != '' && $send_data != '' 
-              && $end_data != '' && $status != '' && $ip_number != '' && $admin1 != '' 
-                 && $admin2 != '' && $admin3 != '' && $subject_name != '') {
+      if ($author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != ''
+              && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
+              && $admin1 != '' && $admin2 != '' && $admin3 != '') {
          $data = array(
            'author' => $author,
            'cathegory' => $cathegory,
            'problem_describe' => $problem_describe,
+           'subject_name' => $subject_name,
            'send_data' => $send_data,
            'end_data' => $end_data,
            'status' => $status,
@@ -140,7 +141,6 @@ $paswd = $request->getParam('password');
            'admin1' => $admin1,
            'admin2' => $admin2,
            'admin3' => $admin3,
-           'subject_name' => $subject_name,
          );
          $userticket = new Userticket();
          $userticket->insert($data);
@@ -154,6 +154,7 @@ $paswd = $request->getParam('password');
    $this->view->userticket->author = '';
    $this->view->userticket->cathegory = ''; 
    $this->view->userticket->problem_describe = ''; 
+   $this->view->userticket->subject_name = ''; 
    $this->view->userticket->send_data = ''; 
    $this->view->userticket->end_data = ''; 
    $this->view->userticket->status = ''; 
@@ -161,7 +162,6 @@ $paswd = $request->getParam('password');
    $this->view->userticket->admin1 = ''; 
    $this->view->userticket->admin2 = ''; 
    $this->view->userticket->admin3 = '';  
-   $this->view->userticket->subject_name = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';
@@ -180,11 +180,11 @@ $paswd = $request->getParam('password');
     $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
 	$username	= $user->username;
-        $userrole       = $user->userrole; // nie chce działać
+        //$userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/user/logout';
 
 	$this->view->assign('username', $username);
-        $this->view->assign('userrole', $userrole); // nie chce działać
+       // $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
       
       

@@ -1,49 +1,50 @@
-<form action="<?php echo $this->baseUrl ?>/admin/<?php
-      echo $this->action; ?>" method="post">
-   <div>
-      <label for="author">Autor</label> 
-      <input required="required" type="text" name="author" value="<?php
-         echo $this->escape(trim($this->userticket->author));?>"/>
-   </div><br/>
-    
-   <div>
-      <label for="cathegory">Kategoria</label>
-      <input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy" list="datalist" value="<?php
+<form action="<?php echo $this->baseUrl ?>/admin/<?php echo $this->action; ?>" method="post">
+   <table>
+        <tr>
+      <td><label for="author">Autor</label></td>
+      <td><input required="required" type="text" name="author" value="<?php
+         echo $this->escape(trim($this->userticket->author));?>"/></td>
+        </tr>
+   
+   <tr>
+      <td><label for="cathegory">Kategoria</label></td>
+      <td><input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy" list="datalist" value="<?php
          echo $this->escape(trim($this->userticket->cathegory));?>"/>
       <datalist id="datalist">
           <option value="problem z komputerem w sali">
           <option value="awaria komputera pracownika">
           <option value="inne">
           <option value="awaria sieci">
-      </datalist>
-   </div><br/>
+      </datalist></td>
+   </tr>
    
-   <div>
-      <label for="problem_describe">Opis problemu</label>
-      <input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
-         echo $this->escape($this->userticket->problem_describe);?>"/>
-   </div><br/>  
+   <tr>
+      <td><label for="problem_describe">Opis problemu</label></td>
+      <td><input required="required" rows="4" cols="8" type="text" name="problem_describe" value="<?php
+         echo $this->escape($this->userticket->problem_describe);?>"/></td>
+   </tr>
    
-   <div>
-       <label for="subject_name">Nazwa przedmiotu</label>
-      <input type="text" name="subject_name"/>
-   </div><br/>
+   <tr>
+       <td><label for="subject_name">Nazwa przedmiotu</label></td>
+       <td><input type="text" name="subject_name" value="<?php
+         echo $this->escape($this->userticket->subject_name);?>"/></td>
+   </tr>
     
-   <div>
-      <label for="send_data">Data wysłania</label>
-      <input required="required" type="text" name="send_data" value="<?php
-         echo $this->escape($this->userticket->send_data);?>"/>
-   </div><br/>
+   <tr>
+      <td><label for="send_data">Data wysłania</label></td>
+      <td><input required="required" type="text" name="send_data" value="<?php
+         echo $this->escape($this->userticket->send_data);?>"/></td>
+   </tr>
     
-   <div>
-      <label for="end_data">Data zakończenia</label>
-      <input required="required" type="text" name="end_data" value="<?php
-         echo $this->escape(trim($this->userticket->end_data));?>"/> 
-   </div><br/>
+   <tr>
+      <td><label for="end_data">Data zakończenia</label></td>
+      <td><input required="required" type="text" name="end_data" value="<?php
+         echo $this->escape(trim($this->userticket->end_data));?>"/></td>
+   </tr>
     
-   <div>
-      <label for="status">Status</label>
-      <input required="required"  placeholder="Naciśnij dwa razy" list="datalist2" type="text" name="status" value="<?php
+   <tr>
+      <td><label for="status">Status</label></td>
+      <td><input required="required"  placeholder="Naciśnij dwa razy" list="datalist2" type="text" name="status" value="<?php
          echo $this->escape($this->userticket->status);?>"/> 
       <datalist id="datalist2">
           <option value="brak">
@@ -53,32 +54,33 @@
           <option value="wysłany do serwisu">
           <option value="zakończony">
           <option value="anulowany">
-      </datalist>
-   </div> <br/>
+      </datalist></td>
+   </tr>
     
-   <div>
-      <label for="ip_number">Numer IP</label>
-      <input required="required" type="text" name="ip_number" value="<?php
-         echo $_SERVER['REMOTE_ADDR'];?>"/> 
-   </div><br/>     
-   
-   <div>
-      <label for="admin1">Admin 1</label>
-      <input type="text" name="admin1" value="<?php
-         echo $this->escape($this->userticket->admin1);?>"/>
-   </div><br/>  
-   
-   <div>
-      <label for="admin2">Admin 2</label>
-      <input type="text" name="admin2" value="<?php
-         echo $this->escape($this->userticket->admin2);?>"/>
-   </div><br/>  
-   
-   <div>
-      <label for="admin3">Admin 3</label>
-      <input type="text" name="admin3" value="<?php
-         echo $this->escape($this->userticket->admin3);?>"/>
-   </div><br/> 
+   <tr>
+      <td><label for="ip_number">Numer IP</label></td>
+      <td><input required="required" type="text" name="ip_number" value="<?php
+         echo $_SERVER['REMOTE_ADDR'];?>"/></td>
+   </tr>
+    
+   <tr>
+      <td><label for="admin1">Admin 1</label></td>
+      <td><input type="text" name="admin1" value="<?php
+         echo $this->escape($this->userticket->admin1);?>"/></td>
+   </tr>
+    
+   <tr>
+      <td><label for="admin2">Admin 2</label></td>
+      <td><input type="text" name="admin2" value="<?php
+         echo $this->escape($this->userticket->admin2);?>"/></td>
+   </tr>
+    
+   <tr>
+      <td><label for="admin3">Admin 3</label></td>
+      <td><input type="text" name="admin3" value="<?php
+         echo $this->escape($this->userticket->admin3);?>"/></td>
+   </tr>
+   </table><br/> 
     
     
    <div id="formbutton">
