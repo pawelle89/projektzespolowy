@@ -1,9 +1,13 @@
 <form action="<?php echo $this->baseUrl ?>/admin/<?php echo $this->action; ?>" method="post">
    <table>
         <tr>
+            <td><label for="userid">Id użytkownika</label> </td>
+            <td><?php echo $this->escape(trim($this->userticket->userid));?></td>
+        </tr>
+        
+        <tr>
       <td><label for="author">Autor</label></td>
-      <td><input required="required" type="text" name="author" value="<?php
-         echo $this->escape(trim($this->userticket->author));?>"/></td>
+      <td><?php echo $this->escape(trim($this->userticket->author));?></td>
         </tr>
    
    <tr>
@@ -79,7 +83,19 @@
       <td><label for="admin3">Admin 3</label></td>
       <td><input type="text" name="admin3" value="<?php
          echo $this->escape($this->userticket->admin3);?>"/></td>
-   </tr>
+   </tr>  
+   
+   <tr>
+      <td><label for="choose">Czy poza otrzymaniem na e-maila wiadomości<br/> o zakończeniu ticketu,
+          chcesz także otrzymywać<br/> informacje o zmianach statusu twojego zgłoszenia?<br/> Jeżeli tak to zaznacz
+          kwadracik.</label></td>
+      <td><input required="required" type="text" name="choose" placeholder="Naciśnij dwa razy"  list="chooselist" value="<?php
+         echo $this->escape($this->userticket->choose);?>" />
+            <datalist id="chooselist">
+                <option value="Tak">
+                <option value="Nie">
+            </datalist></td>
+   </tr> 
    </table><br/> 
     
     

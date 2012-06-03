@@ -103,6 +103,7 @@ $paswd = $request->getParam('password');
 	$user		= $auth->getIdentity();
 	//$real_name	= $user->real_name;
 	$username	= $user->username;
+        $userid         = $user->id;
        
         $this->view->assign('username', $username);
        
@@ -125,11 +126,13 @@ $paswd = $request->getParam('password');
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
+      $choose = trim($filter->filter($this->_request->getPost('choose')));
 
-      if ($author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != ''
+      if ($userid != '' && $author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != ''
               && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
-              && $admin1 != '' && $admin2 != '' && $admin3 != '') {
+              && $admin1 != '' && $admin2 != '' && $admin3 != '' && $choose != '') {
          $data = array(
+           'userid' => $userid,
            'author' => $author,
            'cathegory' => $cathegory,
            'problem_describe' => $problem_describe,
@@ -141,6 +144,7 @@ $paswd = $request->getParam('password');
            'admin1' => $admin1,
            'admin2' => $admin2,
            'admin3' => $admin3,
+           'choose' => $choose,
          );
          $userticket = new Userticket();
          $userticket->insert($data);
@@ -151,6 +155,7 @@ $paswd = $request->getParam('password');
    // set up an "empty" userticket
    $this->view->userticket = new stdClass();
    $this->view->userticket->id = null;
+   $this->view->userticket->userid = '';
    $this->view->userticket->author = '';
    $this->view->userticket->cathegory = ''; 
    $this->view->userticket->problem_describe = ''; 
@@ -162,6 +167,7 @@ $paswd = $request->getParam('password');
    $this->view->userticket->admin1 = ''; 
    $this->view->userticket->admin2 = ''; 
    $this->view->userticket->admin3 = '';  
+   $this->view->userticket->choose = ''; 
 
    // additional view fields required by form
    $this->view->action = 'add';
@@ -180,10 +186,14 @@ $paswd = $request->getParam('password');
     $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
 	$username	= $user->username;
+        $userid         = $user->id;
         //$userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/user/logout';
 
 	$this->view->assign('username', $username);
+        
+	$this->view->assign('userid', $userid);
+        
        // $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
       

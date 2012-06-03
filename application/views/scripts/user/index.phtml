@@ -23,8 +23,9 @@
 
    <?php foreach($this->usertickets as $userticket) : ?>
    
-   <?php if($this->escape($userticket->author)== $this->escape($this->username)) { 
-       if($this->escape($userticket->status)!= 'zakończony') { ?>
+   <?php if($this->escape($userticket->author)== $this->escape($this->username)
+           && $this->escape($userticket->userid)== $this->escape($this->userid)
+           && $this->escape($userticket->status)!= 'zakończony') { ?>
    
    <tr style="background-color: lightblue;">
       <td><?php echo $this->escape($userticket->cathegory);?></td>
@@ -56,7 +57,7 @@
       </td>
    </tr>
    
-   <?php }} ?>
+   <?php } ?>
    
    <?php endforeach; ?> 
 

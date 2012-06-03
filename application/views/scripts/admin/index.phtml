@@ -1,7 +1,8 @@
 <?php echo $this->render('header.phtml'); ?>
    
-
-<h1>Witaj, <?=$this->escape($this->username);?></h1>
+<?php mail($this->escape($this->usermail), 'Zmiana stasusu zgłoszenia', 'Witaj! Status twojego zgłoszenia
+                    został zmieniony na ');  ?>
+<h1>Witaj, <?=$this->escape($this->username);?> <?=$this->escape($this->usermail);?></h1>
 
 <a href='<?=$this->escape($this->urllogout);?>'>Wyloguj się</a>
 <br/>

@@ -5,6 +5,9 @@ require_once 'Guestticket.php';
 require_once 'Zend/Auth.php';
 require_once 'Zend/Auth/Adapter/DbTable.php';
 require_once 'Zend/Mail/Storage/Pop3.php';
+require_once 'Zend/Mail/Transport/Sendmail.php';
+require_once 'Zend/Mail.php';
+
 
 class AdminController extends Zend_Controller_Action
 {
@@ -135,9 +138,14 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
             $this->_redirect('/admin/loginform');
         }
         }
-       
+        
+        $request = $this->getRequest(); 
+	$user		= $auth->getIdentity();
+	$username	= $user->username;
+	$usermail	= $user->e_mail;
+
       $this->view->assign('title','Edytuj Ticket');
-      
+
       $userticket = new Userticket(); 
 
    if ($this->_request->isPost()) {
@@ -145,8 +153,8 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $filter = new Zend_Filter_StripTags(); 
 
       $id = (int)$this->_request->getPost('id');
-      $author = $filter->filter($this->_request->getPost('author'));
-      $author = trim($author);
+      //$author = $filter->filter($this->_request->getPost('author'));
+      //$author = trim($author);
       $cathegory = trim($filter->filter($this->_request->getPost('cathegory'))); 
       $problem_describe = trim($filter->filter($this->_request->getPost('problem_describe'))); 
       $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
@@ -157,7 +165,10 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
+      $choose = trim($filter->filter($this->_request->getPost('choose')));
 
+      $tempstatus = $request->getParam('status');
+      
       // jeżeli admin wybierze status zakończony to data musi się uzupełnić
       // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
       // zmienić się na zakończony
@@ -176,11 +187,11 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       
       
       if ($id !== false) {
-         if ($author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != '' 
+         if ($cathegory != '' && $problem_describe != '' && $subject_name != '' 
                  && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
-                 && $admin1 != ''  && $admin2 != '' && $admin3 != '') {
+                 && $admin1 != ''  && $admin2 != '' && $admin3 != '' && $choose != '') {
             $data = array(
-               'author' => $author,
+               //'author' => $author,
                'cathegory' => $cathegory,
                'problem_describe' => $problem_describe,
                'subject_name' => $subject_name,
@@ -191,9 +202,29 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                'admin1' => $admin1,
                'admin2' => $admin2,
                'admin3' => $admin3,
+               'choose' => $choose,
             );
             $where = 'id = ' . $id;
             $userticket->update($data, $where); 
+            
+            
+            
+            if(($choose == 'Nie') && ($status == 'zakończony'))
+            {
+                // wysyłanie e maila
+                    $mail = new Zend_Mail();
+                    $mail->setBodyText('My Nice Test Text');
+                    $mail->setBodyHtml('My Nice <b>Test</b> Text');
+                    $mail->setFrom('somebody@example.com', 'Some Sender');
+                    $mail->addTo('lukasz-segin@o2.pl', 'Some Recipient');
+                    $mail->setSubject('TestSubject');
+                    $mail->send();
+              //  mail($usermail, 'Zmiana stasusu zgłoszenia', 'Witaj '.$username. '! Status twojego zgłoszenia
+               //     został zmieniony na '.$status.'.');
+                //break;
+            }
+            
+            
 
             $this->_redirect('/admin');
             return;
@@ -411,11 +442,13 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
         $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
 	$username	= $user->username;
+	$usermail	= $user->e_mail;
       //  $userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/admin/logout';
         $searchUrl  = $request->getBaseURL().'/admin/search';
 
 	$this->view->assign('username', $username);
+	$this->view->assign('usermail', $usermail);
        // $this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
         $this->view->assign('urlsearch',$searchUrl); 

@@ -1,6 +1,12 @@
 <form action="<?php echo $this->baseUrl ?>/user/<?php echo $this->action; ?>" method="post">
    <table>
         <tr hidden>
+            <!--<td><label for="userid">Id użytkownika</label> </td>-->
+            <td><input type="hidden" name="userid" value="<?php
+         echo $this->escape(trim($this->userid));?>"/></td>
+        </tr>
+        
+        <tr hidden>
             <!--<td><label for="author">Autor</label> </td>-->
             <td><input type="hidden" name="author" value="<?php
          echo $this->escape(trim($this->username));?>"/></td>
@@ -8,7 +14,7 @@
     
    <tr>
       <td><label for="cathegory">Kategoria</label></td>
-      <td><input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy" list="datalist"/>
+      <td><input required="required" type="text" name="cathegory" placeholder="Naciśnij dwa razy"  list="datalist"/>
       <datalist id="datalist">
           <option value="problem z komputerem w sali">
           <option value="awaria komputera pracownika">
@@ -63,7 +69,18 @@
    <tr hidden>
       <td><label hidden for="admin3">Admin 3</label></td>
       <td><input type="hidden" name="admin3" value="-"/></td>
-   </tr>
+   </tr>  
+   
+   <tr>
+      <td><label for="choose">Czy poza otrzymaniem na e-maila wiadomości<br/> o zakończeniu ticketu,
+          chcesz także otrzymywać<br/> informacje o zmianach statusu twojego zgłoszenia?<br/> Jeżeli tak to zaznacz
+          kwadracik.</label></td>
+      <td><input required="required" type="text" name="choose" placeholder="Naciśnij dwa razy"  list="chooselist" />
+            <datalist id="chooselist">
+                <option value="Tak">
+                <option value="Nie">
+            </datalist></td>
+   </tr> 
     </table><br/>
     
     
