@@ -104,8 +104,11 @@ $paswd = $request->getParam('password');
 	//$real_name	= $user->real_name;
 	$username	= $user->username;
         $userid         = $user->id;
+        $usermail       = $user->e_mail;
        
         $this->view->assign('username', $username);
+        
+        $e_mail = $usermail;
        
       $this->view->assign('title','Dodaj Ticket');
       
@@ -128,12 +131,13 @@ $paswd = $request->getParam('password');
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
       $choose = trim($filter->filter($this->_request->getPost('choose')));
 
-      if ($userid != '' && $author != '' && $cathegory != '' && $problem_describe != '' && $subject_name != ''
+      if ($userid != '' && $author != '' && $e_mail != '' && $cathegory != '' && $problem_describe != '' && $subject_name != ''
               && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
               && $admin1 != '' && $admin2 != '' && $admin3 != '' && $choose != '') {
          $data = array(
            'userid' => $userid,
            'author' => $author,
+           'e_mail' => $e_mail,
            'cathegory' => $cathegory,
            'problem_describe' => $problem_describe,
            'subject_name' => $subject_name,
@@ -157,6 +161,7 @@ $paswd = $request->getParam('password');
    $this->view->userticket->id = null;
    $this->view->userticket->userid = '';
    $this->view->userticket->author = '';
+   $this->view->userticket->e_mail = ''; 
    $this->view->userticket->cathegory = ''; 
    $this->view->userticket->problem_describe = ''; 
    $this->view->userticket->subject_name = ''; 

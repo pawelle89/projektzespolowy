@@ -9,6 +9,16 @@
       <td><label for="author">Autor</label></td>
       <td><?php echo $this->escape(trim($this->userticket->author));?></td>
         </tr>
+        
+        <tr hidden>
+      <td><label for="author_name">author_name</label></td>
+      <td><input type="text" name="author_name" value="<?php echo $this->escape(trim($this->userticket->author));?>"/></td>
+        </tr>
+        
+        <tr hidden>
+      <td><label for="e_mail">e_mail</label></td>
+      <td><input type="text" name="e_mail" value="<?php echo $this->escape(trim($this->userticket->e_mail));?>"/></td>
+        </tr>
    
    <tr>
       <td><label for="cathegory">Kategoria</label></td>
@@ -59,6 +69,11 @@
           <option value="zakończony">
           <option value="anulowany">
       </datalist></td>
+   </tr>
+    
+   <tr hidden>
+      <td><label for="oldstatus">oldStatus</label></td>
+      <td><input type="text" name="oldstatus" value="<?php echo $this->escape($this->userticket->status);?>"/></td>
    </tr>
     
    <tr>

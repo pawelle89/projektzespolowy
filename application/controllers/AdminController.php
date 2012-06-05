@@ -6,6 +6,7 @@ require_once 'Zend/Auth.php';
 require_once 'Zend/Auth/Adapter/DbTable.php';
 require_once 'Zend/Mail/Storage/Pop3.php';
 require_once 'Zend/Mail/Transport/Sendmail.php';
+require_once 'Zend/Mail/Transport/Smtp.php';
 require_once 'Zend/Mail.php';
 
 
@@ -141,8 +142,6 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
         
         $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
-	$username	= $user->username;
-	$usermail	= $user->e_mail;
 
       $this->view->assign('title','Edytuj Ticket');
 
@@ -153,21 +152,24 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
       $filter = new Zend_Filter_StripTags(); 
 
       $id = (int)$this->_request->getPost('id');
-      //$author = $filter->filter($this->_request->getPost('author'));
-      //$author = trim($author);
+      $author_name = $filter->filter($this->_request->getPost('author_name'));
+      $author_name = trim($author_name);
+      $e_mail = trim($filter->filter($this->_request->getPost('e_mail'))); 
       $cathegory = trim($filter->filter($this->_request->getPost('cathegory'))); 
       $problem_describe = trim($filter->filter($this->_request->getPost('problem_describe'))); 
       $subject_name = trim($filter->filter($this->_request->getPost('subject_name')));
       $send_data = trim($filter->filter($this->_request->getPost('send_data'))); 
       $end_data = trim($filter->filter($this->_request->getPost('end_data'))); 
       $status = trim($filter->filter($this->_request->getPost('status'))); 
+      
+      //oldstatus jest potrzebny do sprawdzenia czy status zgłoszenia uległ zmianie
+      $oldstatus = trim($filter->filter($this->_request->getPost('oldstatus'))); 
+      
       $ip_number = trim($filter->filter($this->_request->getPost('ip_number')));  
       $admin1 = trim($filter->filter($this->_request->getPost('admin1')));
       $admin2 = trim($filter->filter($this->_request->getPost('admin2')));
       $admin3 = trim($filter->filter($this->_request->getPost('admin3')));
       $choose = trim($filter->filter($this->_request->getPost('choose')));
-
-      $tempstatus = $request->getParam('status');
       
       // jeżeli admin wybierze status zakończony to data musi się uzupełnić
       // na dzisiejsza, a jeżeli admin da dzisiejszą datę to status powninien
@@ -191,7 +193,6 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
                  && $send_data != '' && $end_data != '' && $status != '' && $ip_number != '' 
                  && $admin1 != ''  && $admin2 != '' && $admin3 != '' && $choose != '') {
             $data = array(
-               //'author' => $author,
                'cathegory' => $cathegory,
                'problem_describe' => $problem_describe,
                'subject_name' => $subject_name,
@@ -212,16 +213,48 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
             if(($choose == 'Nie') && ($status == 'zakończony'))
             {
                 // wysyłanie e maila
-                    $mail = new Zend_Mail();
-                    $mail->setBodyText('My Nice Test Text');
-                    $mail->setBodyHtml('My Nice <b>Test</b> Text');
-                    $mail->setFrom('somebody@example.com', 'Some Sender');
-                    $mail->addTo('lukasz-segin@o2.pl', 'Some Recipient');
-                    $mail->setSubject('TestSubject');
-                    $mail->send();
-              //  mail($usermail, 'Zmiana stasusu zgłoszenia', 'Witaj '.$username. '! Status twojego zgłoszenia
-               //     został zmieniony na '.$status.'.');
-                //break;
+                $settings = array(
+                    'ssl' => 'ssl',
+                    'port' => 465,
+                    'auth' => 'login',
+                    'username' => 'awariauwm',
+                    'password' => 'awariauwm123'
+                );
+                
+                $transport = new Zend_Mail_Transport_Smtp('poczta.o2.pl', $settings);
+                $emailFrom = 'awariauwm@o2.pl';
+                $nameFrom = 'awariauwm';
+                
+                    $mail = new Zend_Mail('utf-8');
+                    $mail->setFrom($emailFrom, $nameFrom);
+                    $mail->setBodyText('Witaj '.$author_name.', twój staus zgłoszenia wysłanego dnia '.$send_data.' zmienił się na zakończony.');
+                    $mail->setBodyHtml('Witaj <b>'.$author_name.'</b><br/>twój staus zgłoszenia wysłanego dnia '.$send_data.' zmienił się na zakończony.');
+                    $mail->addTo($e_mail, $author_name);
+                    $mail->setSubject('Zmiana statusu zgłoszenia');
+                    $mail->send($transport);
+            }
+            else if(($choose == 'Tak') && ($status != $oldstatus))
+            {
+                // wysyłanie e maila
+                $settings = array(
+                    'ssl' => 'ssl',
+                    'port' => 465,
+                    'auth' => 'login',
+                    'username' => 'awariauwm',
+                    'password' => 'awariauwm123'
+                );
+                
+                $transport = new Zend_Mail_Transport_Smtp('poczta.o2.pl', $settings);
+                $emailFrom = 'awariauwm@o2.pl';
+                $nameFrom = 'awariauwm';
+                
+                    $mail = new Zend_Mail('utf-8');
+                    $mail->setFrom($emailFrom, $nameFrom);
+                    $mail->setBodyText('Witaj '.$author_name.', twój staus zgłoszenia wysłanego dnia '.$send_data.' zmienił się na '.$status.'.');
+                    $mail->setBodyHtml('Witaj <b>'.$author_name.'</b><br/>twój staus zgłoszenia wysłanego dnia '.$send_data.' zmienił się na '.$status.'.');
+                    $mail->addTo($e_mail, $author_name);
+                    $mail->setSubject('Zmiana statusu zgłoszenia');
+                    $mail->send($transport);
             }
             
             
