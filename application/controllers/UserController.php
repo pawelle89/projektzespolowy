@@ -22,23 +22,6 @@ class UserController extends Zend_Controller_Action
 $auth->clearIdentity();
 $this->_redirect('/index/index');
  }
-    
-    public function userpageAction(){
-    $auth		= Zend_Auth::getInstance(); 
-	
-	if(!$auth->hasIdentity()){
-	  $this->_redirect('/user/loginform');
-	}
-  
-    $request = $this->getRequest(); 
-	$user		= $auth->getIdentity();
-	//$real_name	= $user->real_name;
-	$username	= $user->username;
-	$logoutUrl  = $request->getBaseURL().'/user/logout';
-
-	$this->view->assign('username', $username);
-	$this->view->assign('urllogout',$logoutUrl);
-}
  
     public function authAction(){
    $request 	= $this->getRequest();
@@ -222,38 +205,5 @@ $this->view->assign('action', $request->getBaseURL()."/user/auth");
    $this->view->assign('password', 'Hasło');	
     
  }
-  
-  public function registerAction()
- {
-   $request = $this->getRequest();
-
-   $this->view->assign('action',"process");
-   $this->view->assign('title','Rejestracjia');	
-   $this->view->assign('label_uname','Nazwa Użytkownika');	
-   $this->view->assign('label_pass','Hasło');
-   $this->view->assign('e_mail','e-mail');
-   $this->view->assign('label_submit','Potwierdź');		
-   $this->view->assign('description','Proszę o wypełnić cały formularz:');		
- }
-
-  public function processAction()
- {
-$registry = Zend_Registry::getInstance();  
-	$DB = $registry['DB'];
-	
-    $request = $this->getRequest();
-
-$data = array('username' => $request->getParam('username'),
-              'password' => md5($request->getParam('password')),
-                'e_mail' => $request->getParam('e_mail')//,
-		//'role' => user
-              );
-   $DB->insert('users', $data);
-
-   $this->view->assign('title','Rejestracja w toku.');
-$this->view->assign('description','Rejestracja powiodła się!');  	
-
- }
-
 }
 ?>

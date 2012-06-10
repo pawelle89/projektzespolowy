@@ -91,8 +91,9 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
      
          $data = array(
            'author' => 'Mail',
-           'cathegory' => $message->subject,
-           'problem_describe' => $message->getContent(),
+           'cathegory' => mb_decode_mimeheader("=?iso-8859-1?q?{$message->subject}?="),
+           'problem_describe' => mb_decode_mimeheader("=?iso-8859-1?q?{$message->getContent()}?="),
+           //'problem_describe' => $message->getContent(),
            'subject_name' => '-',
            'send_data' => $obecna_data,
            'end_data' => '-',
@@ -514,11 +515,11 @@ $this->view->assign('action', $request->getBaseURL()."/admin/auth");
         $request = $this->getRequest(); 
 	$user		= $auth->getIdentity();
 	$username	= $user->username;
-        $userrole       = $user->userrole; // nie chce działać
+        //$userrole       = $user->userrole; // nie chce działać
 	$logoutUrl  = $request->getBaseURL().'/admin/logout';
 
 	$this->view->assign('username', $username);
-        $this->view->assign('userrole', $userrole); // nie chce działać
+        //$this->view->assign('userrole', $userrole); // nie chce działać
 	$this->view->assign('urllogout',$logoutUrl);
         
         $request = $this->getRequest();  
